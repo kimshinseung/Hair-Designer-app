@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hairapp/ButtonGroupWidget.dart';
+import 'package:hairapp/caculator/ButtonGroupWidget.dart';
 
-import 'display/displayText.dart';
+import 'caculator/displayText.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
