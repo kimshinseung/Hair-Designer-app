@@ -14,11 +14,7 @@ class CalculatorControl
 
   dynamic firstNumber = 0 ;
   dynamic secondNumber = 0 ;
-  //-----------------------------------------------------------------------------------------
-  void teCalculatorControlm()
-  {
-  }
-  //-----------------------------------------------------------------------------------------
+
   void operatorOnPressed(BuildContext context, String st)
   {
     resultOnPressed(context) ;
@@ -26,6 +22,25 @@ class CalculatorControl
     selectedOperator = st ;
     firstNumber = double.parse(context.read<DisplayNumValue>().displayValue) ;
   }
+  void discountRatio(BuildContext context, String st) {
+    var display = '0' ;
+    firstNumber = double.parse(context.read<DisplayNumValue>().displayValue) ;
+
+    switch(st) {
+      case '5%' : firstNumber = firstNumber * 0.95; break;
+      case '10%' : firstNumber = firstNumber * 0.9; break;
+      case '15%' : firstNumber = firstNumber * 0.85; break;
+      case '20%' : firstNumber = firstNumber * 0.8; break;
+      case '25%' : firstNumber = firstNumber * 0.75; break;
+    }
+    display = firstNumber.toString();
+    if(display.length >= 3 && display.startsWith('.0', display.length-2))
+    {
+      display = display.substring(0, display.length-2) ;  // 정수일 경우 소수점 이하 지워라...
+    }
+    _display(context, display);
+  }
+
   //-----------------------------------------------------------------------------------------
   void resultOnPressed(BuildContext context)
   {

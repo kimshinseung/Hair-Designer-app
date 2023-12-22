@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hairapp/caculator/CalculatorControl.dart';
+import 'package:hairapp/info/information.dart';
+import 'package:hairapp/stylebook/stylebook.dart';
+
+import 'Home/home.dart';
+import 'caculator/caculator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,29 +24,21 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           elevation: 2, //음영 제거
           centerTitle: true, //가운데정렬
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.green,
-          title: const Text("디자이너 전용 계산기"
+          backgroundColor: const Color(0xffBD9DCF),
+          foregroundColor: Colors.white,
+          title: const Text("디자이너 어플"
             ,style: TextStyle(
               fontSize: 20,
               fontStyle: FontStyle.normal,
             ),
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            Center(
-              child: Text('home'),
-            ),
-            Center(
-              child: Text('music'),
-            ),
-            Center(
-              child: Text('apps'),
-            ),
-            Center(
-              child: Text('settings'),
-            ),
+            HomePage(), // '홈' 페이지
+            const CalculatorApp(), // '계산기' 페이지
+            information(), // '정보 관리' 페이지
+            stylebook(), // '스타일북' 페이지
           ],
         ),
         extendBodyBehindAppBar: true,
@@ -52,9 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.only(bottom: 10,top: 5),
             child: const TabBar(
               indicatorSize: TabBarIndicatorSize.label,
-              indicatorColor: Colors.red,
+              indicatorColor: Color(0xffBD9DCF),
               indicatorWeight: 2,
-              labelColor: Colors.red,
+              labelColor: Color(0xffBD9DCF),
               unselectedLabelColor: Colors.white,
               labelStyle: TextStyle(
                 fontSize: 13,
@@ -64,23 +62,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(
                     Icons.home_outlined,
                   ),
-                  text: 'Home',
+                  text: '홈',
                 ),
                 Tab(
-                  icon: Icon(Icons.music_note),
-                  text: 'Music',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.apps,
-                  ),
-                  text: 'Apps',
+                  icon: Icon(Icons.calculate_outlined),
+                  text: '계산기',
                 ),
                 Tab(
                   icon: Icon(
-                    Icons.settings,
+                    Icons.perm_device_information,
                   ),
-                  text: 'Settings',
+                  text: '정보 관리',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.style_outlined,
+                  ),
+                  text: '스타일북',
                 )
               ],
             ),
