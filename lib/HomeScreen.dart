@@ -21,18 +21,18 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 4,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 2, //음영 제거
-          centerTitle: true, //가운데정렬
-          backgroundColor: const Color(0xffBD9DCF),
-          foregroundColor: Colors.white,
-          title: const Text("디자이너 어플"
-            ,style: TextStyle(
-              fontSize: 20,
-              fontStyle: FontStyle.normal,
-            ),
-          ),
-        ),
+        // appBar: AppBar(
+        //   elevation: 2, //음영 제거
+        //   centerTitle: true, //가운데정렬
+        //   backgroundColor: Colors.white,
+        //   foregroundColor: const Color(0xffBD9DCF),
+        //   title: const Text("디자이너 어플"
+        //     ,style: TextStyle(
+        //       fontSize: 20,
+        //       fontStyle: FontStyle.normal,
+        //     ),
+        //   ),
+        // ),
         body: TabBarView(
           children: [
             HomePage(), // '홈' 페이지

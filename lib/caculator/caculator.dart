@@ -13,6 +13,7 @@ class CalculatorApp extends StatelessWidget
   {
     return MaterialApp
       (
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue,),
       home: DesignPage(),
@@ -27,7 +28,6 @@ class DesignPage extends StatelessWidget
   {
     return Scaffold
       (
-      appBar: AppBar(title: const Text('디자이너 전용 어플'),),
       body: ChangeNotifierProvider
         (
         create: (BuildContext context) => DisplayNumValue(),
@@ -36,6 +36,7 @@ class DesignPage extends StatelessWidget
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>
           [
+            SizedBox(height: 80,),
             Flexible
               (
               flex: 1,

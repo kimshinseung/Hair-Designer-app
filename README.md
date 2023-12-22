@@ -30,3 +30,5 @@
 
 - Cannot run with sound null safety, because the following dependencies
  > 해결방법 run-> edit configuration -> additional run args에 --no-sound-null-safety입력
+- 앱바의 debug 없애기
+ > debugShowCheckedModeBanner: false
