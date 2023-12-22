@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:hairapp/home_screen.dart';
+import'package:hairapp/caculator/caculator.dart';
+import 'package:provider/provider.dart';
+
+import 'HomeScreen.dart';
+import 'caculator/Model.dart';
+import 'caculator/caculator.dart';
 
 void main() {
   runApp(const MyApp());
+  // runApp( //계산기
+  //   MultiProvider
+  //     (
+  //     providers: [ChangeNotifierProvider(create: (_) => DisplayNumValue()),],
+  //     child: CalculatorApp(),
+  //   ),
+  // );
 }
 
 class MyApp extends StatelessWidget {
