@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hairapp/caculator/CalculatorControl.dart';
 import 'package:hairapp/info/information.dart';
 import 'package:hairapp/stylebook/stylebook.dart';
-
+// ignore_for_file: prefer_const_constructors
+// const 상수 무시
 import 'Home/home.dart';
 import 'caculator/caculator.dart';
 

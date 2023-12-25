@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'HomeScreen.dart';
 import 'caculator/Model.dart';
 import 'caculator/caculator.dart';
+// ignore_for_file: prefer_const_constructors
+// const 상수 무시
 
 void main() {
   runApp(const MyApp());

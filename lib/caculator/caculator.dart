@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'CalculatorControl.dart';
 import 'Model.dart';
+// const 상수 무시
 
 class CalculatorApp extends StatelessWidget
 {
@@ -105,7 +106,7 @@ class CalButton extends StatelessWidget
         fixedSize: Size((MediaQuery.of(context).size.width/4)-30, (MediaQuery.of(context).size.width/4)-20),
         shape: const CircleBorder(),
       ),
-      child: Text(caption, style: const TextStyle(fontSize: 20,),),
+      child: Text(caption, style: const TextStyle(fontSize: 13,),),
     );
   }
 }
@@ -130,6 +131,7 @@ class ButtonGroupWidget extends StatelessWidget
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '⇍', color: Colors.grey, buttonKind: 3,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '÷', color: Colors.orange, buttonKind: 1,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '5%', color: Colors.orange, buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '30%', color: Colors.orange, buttonKind: 4,),),
           ],
         ),
         TableRow
@@ -141,6 +143,7 @@ class ButtonGroupWidget extends StatelessWidget
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '9', color: Color.fromARGB(255, 61, 61, 61), buttonKind: 0,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '×', color: Colors.orange, buttonKind: 1,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '10%', color: Colors.orange, buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '35%', color: Colors.orange, buttonKind: 4,),),
           ],
         ),
         TableRow
@@ -152,6 +155,7 @@ class ButtonGroupWidget extends StatelessWidget
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '6', color: Color.fromARGB(255, 61, 61, 61), buttonKind: 0,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '−', color: Colors.orange,buttonKind: 1,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '15%', color: Colors.orange, buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '40%', color: Colors.orange, buttonKind: 4,),),
           ],
         ),
         TableRow
@@ -163,6 +167,7 @@ class ButtonGroupWidget extends StatelessWidget
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '3', color: Color.fromARGB(255, 61, 61, 61), buttonKind: 0,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '+', color: Colors.orange, buttonKind: 1,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '20%', color: Colors.orange, buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '45%', color: Colors.orange, buttonKind: 4,),),
           ],
         ),
         TableRow
@@ -174,6 +179,7 @@ class ButtonGroupWidget extends StatelessWidget
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '.', color: Color.fromARGB(255, 61, 61, 61), buttonKind: 0,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '=', color: Colors.orange, buttonKind: 2,),),
             Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '25%', color: Colors.orange, buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '50%', color: Colors.orange, buttonKind: 4,),),
           ],
         ),
       ],

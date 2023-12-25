@@ -32,6 +32,11 @@ class CalculatorControl
       case '15%' : firstNumber = firstNumber * 0.85; break;
       case '20%' : firstNumber = firstNumber * 0.8; break;
       case '25%' : firstNumber = firstNumber * 0.75; break;
+      case '30%' : firstNumber = firstNumber * 0.7; break;
+      case '35%' : firstNumber = firstNumber * 0.65; break;
+      case '40%' : firstNumber = firstNumber * 0.6; break;
+      case '45%' : firstNumber = firstNumber * 0.55; break;
+      case '50%' : firstNumber = firstNumber * 0.5; break;
     }
     display = firstNumber.toString();
     if(display.length >= 3 && display.startsWith('.0', display.length-2))
