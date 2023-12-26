@@ -37,20 +37,32 @@ class DesignPage extends StatelessWidget
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>
           [
-            SizedBox(height: 80,),
+            const SizedBox(height: 50,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Image.asset('assets/images/logo.png',
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.contain,),
+                ),
+              ],
+            ),
             Flexible
               (
               flex: 1,
               child: Container
                 (
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(20),
                 alignment: const Alignment(1.0, 1.0),   // 내부 위젯의 위치를 우측 하단으로 설정
                 child: const DisplayValue(),
               ),
             ),
             const Flexible
               (
-              flex: 3,
+              flex: 4,
               child: ButtonGroupWidget(),
             ),
           ],

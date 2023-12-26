@@ -18,13 +18,20 @@
  - 폰트 - 나눔손글씨 암스테르담
 
 
-
 ## 코드 설명
 
 - (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) * 0.30, :
        Container의 높이를 전체화면의 30% 로 설정합니다. 높이 설정은 핸드폰 마다 화면사이즈가
        틀리기 때문에 핸드폰의 세로값을 불러와서 세로값의 30% 의 크기로 자동 생성됩니다.
-- 
+-  images.insert(0,Image.asset("assets/images/home.png"))
+    > 광고를 넣을때 최근에 추가한 것을 맨처음 보여주기 위한 코드
+
+## 사용 dependencies
+- image_picker: 0.6.7 sdk31버전
+-   assets: 이미지 추가
+    - assets/images/logo.png
+    - assets/images/home.png 
+
 
 ## 만났던 오류
 
@@ -32,3 +39,7 @@
  > 해결방법 run-> edit configuration -> additional run args에 --no-sound-null-safety입력
 - 앱바의 debug 없애기
  > debugShowCheckedModeBanner: false
+- ListView가 scroll이 안되는 증상
+ > Container로 감싸고 height를 지정해주었다, 추가 : scrollDirection: Axis.vertical
+- .dart_tool\flutter_build\277fa573f22288941d03eec5c189f5fc\kernel_snapshot.d 오류
+  > flutter clean -> flutter pub get

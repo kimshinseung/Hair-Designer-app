@@ -4,8 +4,25 @@ import 'package:flutter/cupertino.dart';
 class information extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('정보'),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(height: 50,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Image.asset('assets/images/logo.png',
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.contain,),
+              ),
+            ],
+          ),
+        ],
+
+      )
     );
   }
 }
