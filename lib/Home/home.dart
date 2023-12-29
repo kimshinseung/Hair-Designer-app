@@ -1,6 +1,8 @@
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
+
+import 'ImageViewer.dart';
 // ignore_for_file: prefer_const_constructors
 // const 상수 무시
 
@@ -47,9 +49,9 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Image.asset('assets/images/logo.png',
-              width: 80,
-              height: 80,
-              fit: BoxFit.contain,),
+                width: 80,
+                height: 80,
+                fit: BoxFit.contain,),
             ),
             // TextField(
             //   decoration: InputDecoration(
@@ -82,6 +84,12 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 title:images[index],
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ImageViewer(path: images[index],)),
+                  );
+                },
               );
             }, separatorBuilder: (BuildContext context, int index) => Divider(),
           ),
