@@ -26,6 +26,13 @@
        틀리기 때문에 핸드폰의 세로값을 불러와서 세로값의 30% 의 크기로 자동 생성됩니다.
 -  images.insert(0,Image.asset("assets/images/home.png"))
     > 광고를 넣을때 최근에 추가한 것을 맨처음 보여주기 위한 코드
+- onTap: (){
+  Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => ImageViewer(path: images[index],)),
+  );
+  },
+    > 클릭 시 디테일 화면으로 전환
 
 ## 사용 dependencies
 - image_picker: 0.6.7 sdk31버전
