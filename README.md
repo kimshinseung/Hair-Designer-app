@@ -33,6 +33,12 @@
   );
   },
     > 클릭 시 디테일 화면으로 전환
+- onChanged: (value){
+  setState(() {
+  name = value;
+  });
+  },
+  > 한글자 한글자 변경이 일어날 때마다 setState를 통해 name변수에 값 저장
 
 ## 사용 dependencies
 - image_picker: 0.6.7 sdk31버전
