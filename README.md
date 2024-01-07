@@ -45,7 +45,7 @@
 -   assets: 이미지 추가
     - assets/images/logo.png
     - assets/images/home.png 
-
+- shared_preferences: ^2.0.8 사용
 
 ## 만났던 오류
 
@@ -65,3 +65,5 @@
   appBar: AppBar()
   body: ~
   );
+- getSharedPreferences에 데이터를 수정할때마다 이 전 데이터가 삭제되는 현상
+ >

@@ -1,0 +1,86 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert'; // For JSON encoding and decoding
+// ignore_for_file: prefer_const_constructors
+// const 상수 무시
+class DetailInfo extends StatefulWidget {
+  final Map<String, String> userData;
+  const DetailInfo({Key? key, required this.userData}) : super(key: key);
+
+  @override
+  State<DetailInfo> createState() => _DetailInfoState();
+}
+
+class _DetailInfoState extends State<DetailInfo> {
+
+  late TextEditingController nameController;
+  late TextEditingController sexController;
+  late TextEditingController ageController;
+  late TextEditingController featureController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(text: widget.userData['name']);
+    sexController = TextEditingController(text: widget.userData['sex']);
+    ageController = TextEditingController(text: widget.userData['age']);
+    featureController = TextEditingController(text: widget.userData['feature']);
+  }
+
+  void saveChanges() async {
+    final prefs = await SharedPreferences.getInstance();
+    widget.userData['name'] = nameController.text;
+    widget.userData['sex'] = sexController.text;
+    widget.userData['age'] = ageController.text;
+    widget.userData['feature'] = featureController.text;
+
+    await prefs.setStringList('userInfo', [json.encode(widget.userData)]);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('수정되었습니다!')),
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 40,),
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                hintText: '이름',
+              ),
+            ),
+            TextField(
+              controller: sexController,
+              decoration: InputDecoration(
+                hintText: '성별',
+              ),
+            ),
+            TextField(
+              controller: ageController,
+              decoration: InputDecoration(
+                hintText: '나이',
+              ),
+            ),
+            TextField(
+              controller: featureController,
+              decoration: InputDecoration(
+                hintText: '특징',
+              ),
+            ),
+            SizedBox(height: 20,),
+            ElevatedButton(onPressed: saveChanges, child: Text('수정완료'),)
+          ],
+        ),
+      ),
+    );
+  }
+}
