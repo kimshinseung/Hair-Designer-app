@@ -1,13 +1,12 @@
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'ImageViewer.dart';
 // ignore_for_file: prefer_const_constructors
 // const 상수 무시
 
 String searchText = '';
-List<Widget> images = [];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,23 +16,87 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<String> imagePaths = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadImagePaths();
+  }
+
+  Future<void> _loadImagePaths() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? savedPaths = prefs.getStringList('imagePaths');
+    if (savedPaths != null) {
+      setState(() {
+        imagePaths = savedPaths;
+      });
+    }
+  }
 
 
   void pickImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     if(image != null) {
-      File imageFile = File(image.path);
-      addImage(imageFile);
+      // File imageFile = File(image.path);
+      addImage(File(image.path));
     }
   }
 
   void addImage(File image) {
-
-    Widget imagewidget = Image.file(image);
+    //Widget imagewidget = Image.file(image);
     setState(() {
-      images.insert(0,imagewidget); //여기서 사진 추가하면 됨
+      imagePaths.insert(0,image.path); //여기서 사진 추가하면 됨
     });
+    saveImagePaths();
+  }
+
+  Future<void> saveImagePaths() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('imagePaths', imagePaths);
+  }
+
+  Future<void> removeImagePath(int index) async {
+    setState(() {
+      imagePaths.removeAt(index);
+    });
+    saveImagePaths();
+  }
+  void showOptionsDialog(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // title: Text('선택'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text('보기'),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ImageViewer(path: Image.file(File(imagePaths[index])),)),
+                    );
+                  },
+                ),
+                Padding(padding: EdgeInsets.all(8.0)),
+                GestureDetector(
+                  child: Text('삭제'),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    removeImagePath(index);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -81,15 +144,12 @@ class _HomePageState extends State<HomePage> {
           child: ListView.separated(
             scrollDirection: Axis.vertical,
             padding: EdgeInsets.all(10),
-            itemCount: images.length,
+            itemCount: imagePaths.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                title:images[index],
+                title:Image.file(File(imagePaths[index])),
                 onTap: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ImageViewer(path: images[index],)),
-                  );
+                  showOptionsDialog(context, index);
                 },
               );
             }, separatorBuilder: (BuildContext context, int index) => Divider(),
