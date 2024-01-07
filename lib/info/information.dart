@@ -11,7 +11,6 @@ class information extends StatefulWidget {
 class _informationState extends State<information> {
   void addInfo() {
     setState(() {
-
     });
   }
 

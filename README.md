@@ -57,3 +57,11 @@
  > Container로 감싸고 height를 지정해주었다, 추가 : scrollDirection: Axis.vertical
 - .dart_tool\flutter_build\277fa573f22288941d03eec5c189f5fc\kernel_snapshot.d 오류
   > flutter clean -> flutter pub get
+- keyboard overflow
+  > /* lib/main.dart */
+  (생략)
+  return Scaffold(
+  resizeToAvoidBottomInset: false,
+  appBar: AppBar()
+  body: ~
+  );

@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+        SizedBox(height: 20,),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal:100,vertical: 0),
           child: TextField(
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Container(
-          height: 549,
+          height: 529,
           child: ListView.separated(
             scrollDirection: Axis.vertical,
             padding: EdgeInsets.all(10),

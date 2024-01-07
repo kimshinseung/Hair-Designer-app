@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         // appBar: AppBar(
         //   elevation: 2, //음영 제거
