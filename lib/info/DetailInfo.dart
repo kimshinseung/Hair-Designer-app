@@ -30,16 +30,46 @@ class _DetailInfoState extends State<DetailInfo> {
 
   void saveChanges() async {
     final prefs = await SharedPreferences.getInstance();
-    widget.userData['name'] = nameController.text;
-    widget.userData['sex'] = sexController.text;
-    widget.userData['age'] = ageController.text;
-    widget.userData['feature'] = featureController.text;
+    List<String>? savedInfo = prefs.getStringList('userInfo') ?? [];
 
-    await prefs.setStringList('userInfo', [json.encode(widget.userData)]);
+    Map<String, String> updatedInfo = {
+      'name': nameController.text,
+      'sex': sexController.text,
+      'age': ageController.text,
+      'feature': featureController.text,
+    };
+
+    //수정할 아이템을 리스트에서 찾아야 함
+    int indexUpdate = -1;
+
+    for (var i = 0; i < savedInfo.length; i++) {
+      try {
+        Map<String, dynamic> currentItem = json.decode(savedInfo[i]);
+        Map<String, String> currentItemString = currentItem.map((key, value) => MapEntry(key, value.toString()));
+
+        if (currentItemString['name'] == widget.userData['name']) {
+          indexUpdate = i;
+          break;
+        }
+      } catch (e) {
+        // Handle potential JSON decode errors
+        print("Error decoding JSON: $e");
+      }
+    }
+
+    if(indexUpdate != -1) {
+      savedInfo[indexUpdate] = json.encode(updatedInfo);
+    } else {
+      print("item to update not found");
+    }
+
+    await prefs.setStringList('userInfo', savedInfo);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('수정되었습니다!')),
     );
+    Navigator.pop(context);
+    print(savedInfo);
   }
 
 
