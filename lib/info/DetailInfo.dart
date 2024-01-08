@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert'; // For JSON encoding and decoding
 // ignore_for_file: prefer_const_constructors
@@ -18,6 +19,7 @@ class _DetailInfoState extends State<DetailInfo> {
   late TextEditingController sexController;
   late TextEditingController ageController;
   late TextEditingController featureController;
+  late TextEditingController lastModified;
 
   @override
   void initState() {
@@ -26,6 +28,7 @@ class _DetailInfoState extends State<DetailInfo> {
     sexController = TextEditingController(text: widget.userData['sex']);
     ageController = TextEditingController(text: widget.userData['age']);
     featureController = TextEditingController(text: widget.userData['feature']);
+    lastModified = TextEditingController(text: widget.userData['lastEdited']);
   }
 
   void saveChanges() async {
@@ -37,6 +40,7 @@ class _DetailInfoState extends State<DetailInfo> {
       'sex': sexController.text,
       'age': ageController.text,
       'feature': featureController.text,
+      'lastEdited' : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
     };
 
     //수정할 아이템을 리스트에서 찾아야 함
@@ -64,12 +68,12 @@ class _DetailInfoState extends State<DetailInfo> {
     }
 
     await prefs.setStringList('userInfo', savedInfo);
+    await prefs.setString('lastModified', DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()));
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('수정되었습니다!')),
     );
     Navigator.pop(context);
-    print(savedInfo);
   }
 
 
@@ -176,7 +180,19 @@ class _DetailInfoState extends State<DetailInfo> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(
+                    child: TextField(
+                      controller: lastModified,
+                      decoration: InputDecoration(),
+                ))
+              ],
+            ),
+            SizedBox(height: 10,),
             ElevatedButton(onPressed: saveChanges, child: Text('수정완료'),)
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 // ignore_for_file: prefer_const_constructors
@@ -35,6 +36,7 @@ class _AddInfoState extends State<AddInfo> {
         'feature' : featureController.text,
         'age' : ageController.text,
         'sex' : selectedGender ?? '안정함',
+        'lastEdited' : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
       };
 
       savedInfo.add(json.encode(newInfo)); //json형태로 저장

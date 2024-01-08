@@ -50,6 +50,7 @@
     - assets/images/logo.png
     - assets/images/home.png 
 - shared_preferences: ^2.0.8 사용
+- intl: ^0.17.0 사용 -> DateFormat을 하는데 필요
 
 ## 만났던 오류
 
