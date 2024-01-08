@@ -74,6 +74,7 @@ class _AddInfoState extends State<AddInfo> {
               ),
             ],
           ),
+          SizedBox(height: 30,),
           Column(
             children: [
               TextField(
