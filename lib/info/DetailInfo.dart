@@ -82,29 +82,99 @@ class _DetailInfoState extends State<DetailInfo> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 40,),
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                hintText: '이름',
-              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text("이름:",
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                  ),
+                ),
+                Expanded(
+                  flex: 10,
+                  child: TextField(
+                    style: TextStyle(
+                      fontSize: 20
+                    ),
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: '이름',
+                    ),
+                  ),
+                ),
+              ],
             ),
-            TextField(
-              controller: sexController,
-              decoration: InputDecoration(
-                hintText: '성별',
-              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text("성별:",
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),),
+                ),
+                Expanded(
+                  flex: 10,
+                  child: TextField(
+                    style: TextStyle(
+                        fontSize: 20
+                    ),
+                    controller: sexController,
+                    decoration: InputDecoration(
+                      hintText: '성별',
+                    ),
+                  ),
+                ),
+              ],
             ),
-            TextField(
-              controller: ageController,
-              decoration: InputDecoration(
-                hintText: '나이',
-              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text("나이:",
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),),
+                ),
+                Expanded(
+                  flex: 10,
+                  child: TextField(
+                    style: TextStyle(
+                        fontSize: 20
+                    ),
+                    controller: ageController,
+                    decoration: InputDecoration(
+                      hintText: '나이',
+                    ),
+                  ),
+                ),
+              ],
             ),
-            TextField(
-              controller: featureController,
-              decoration: InputDecoration(
-                hintText: '특징',
-              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text("특징:",
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),),
+                ),
+                Expanded(
+                  flex: 10,
+                  child: TextField(
+                    style: TextStyle(
+                        fontSize: 20
+                    ),
+                    controller: featureController,
+                    decoration: InputDecoration(
+                      hintText: '특징',
+                    ),
+                    maxLines: 5,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20,),
             ElevatedButton(onPressed: saveChanges, child: Text('수정완료'),)
