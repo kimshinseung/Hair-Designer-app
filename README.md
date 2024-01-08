@@ -39,7 +39,11 @@
   });
   },
   > 한글자 한글자 변경이 일어날 때마다 setState를 통해 name변수에 값 저장
-
+- 검색창에 글자를 입력하게 되면 onChanged함수가 실행되어 Overlay를 통해서 검색창 바로 밑, 화면에 중첩으로
+- 검색결과를 보여지게 만들었다.
+    > 검색창에 포커스가 맞춰지게 되면 'overlay'를 표시하고, 벗어나면 'overlay' 제거
+- 검색창 바로 밑에 결과 나오게 하기
+  > OverlayEntry의 위치 조정 필요 : CompositedTransformTarget위젯을 활용해서 'overlay'위치에 정렬
 ## 사용 dependencies
 - image_picker: 0.6.7 sdk31버전
 -   assets: 이미지 추가

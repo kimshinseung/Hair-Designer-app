@@ -1,12 +1,14 @@
+import 'dart:convert';
+
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../info/DetailInfo.dart';
 import 'ImageViewer.dart';
 // ignore_for_file: prefer_const_constructors
 // const 상수 무시
 
-String searchText = '';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,11 +19,109 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> imagePaths = [];
+  String searchText = '';
+  
+  //필터링할 정보들
+  List<Map<String, String>> userInfo = [];
+  List<Map<String, String>> filteredUserInfo = [];
+
+
+  //검색결과를 overlay해서 보여준다.
+  FocusNode focusNode = FocusNode();
+  OverlayEntry? overlayEntry;
+  final LayerLink layerLink = LayerLink();
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  void showOverlay(BuildContext context) {
+    overlayEntry = createOverlayEntry(context);
+    Overlay.of(context)?.insert(overlayEntry!);
+  }
+
+  void removeOverlay() {
+    overlayEntry?.remove();
+    overlayEntry = null;
+  }
+
+  OverlayEntry createOverlayEntry(BuildContext context) {
+    return OverlayEntry(
+      builder: (context) => Positioned(
+        width: 213,
+        child: CompositedTransformFollower(
+          link: layerLink,
+          showWhenUnlinked: false,
+          offset: Offset(0, 48), // TextField의 높이에 따라 조정
+          child: Material(
+            elevation: 4.0,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: filteredUserInfo.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(filteredUserInfo[index]['name'] ?? ''),
+                  onTap:() {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailInfo(userData: userInfo[index]),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     _loadImagePaths();
+    loadUserInfo();
+    focusNode.addListener(() {
+      if(focusNode.hasFocus) {
+        showOverlay(context);
+      } else {
+        removeOverlay();
+      }
+    });
+  }
+
+  Future<void> loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? savedInfo = prefs.getStringList('userInfo') ?? [];
+
+    List<Map<String, String>> loadedInfo = [];
+
+    for (var info in savedInfo) {
+      var decoded = json.decode(info);
+      if (decoded is Map<String, dynamic>) {
+        loadedInfo.add(decoded.map((key, value) => MapEntry(key, value.toString())));
+      }
+    }
+
+    setState(() {
+      userInfo = loadedInfo;
+      filteredUserInfo = List.from(userInfo);
+    });
+  }
+
+  void onSearchTextChanged(String text) {
+    setState(() {
+      filteredUserInfo = userInfo
+          .where((user) => user['name']!.toLowerCase().contains(text.toLowerCase()))
+          .toList();
+    });
   }
 
   Future<void> _loadImagePaths() async {
@@ -116,12 +216,6 @@ class _HomePageState extends State<HomePage> {
                 height: 80,
                 fit: BoxFit.contain,),
             ),
-            // TextField(
-            //   decoration: InputDecoration(
-            //     hintText: '이름을 입력해주세요',
-            //     border: OutlineInputBorder(),
-            //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: IconButton(onPressed: pickImage, icon: Icon(Icons.add_box_rounded,size: 40,)),
@@ -129,30 +223,43 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         SizedBox(height: 20,),
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(horizontal:100,vertical: 0),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: '이름을 입력해주세요.',
-              border: OutlineInputBorder(),
+          child: CompositedTransformTarget(
+            link: layerLink,
+            child: TextField(
+              focusNode: focusNode,
+              controller: searchController,
+              decoration: InputDecoration(
+                hintText: '이름을 입력해주세요.',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (text) {
+                onSearchTextChanged(text);
+                if(overlayEntry != null) {
+                  removeOverlay();
+                  showOverlay(context);
+                }
+              },
             ),
-
           ),
         ),
-        Container(
-          height: 529,
-          child: ListView.separated(
-            scrollDirection: Axis.vertical,
-            padding: EdgeInsets.all(10),
-            itemCount: imagePaths.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title:Image.file(File(imagePaths[index])),
-                onTap: (){
-                  showOptionsDialog(context, index);
-                },
-              );
-            }, separatorBuilder: (BuildContext context, int index) => Divider(),
+        Expanded(
+          child: Container(
+            height: 529,
+            child: ListView.separated(
+              scrollDirection: Axis.vertical,
+              padding: EdgeInsets.all(10),
+              itemCount: imagePaths.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title:Image.file(File(imagePaths[index])),
+                  onTap: (){
+                    showOptionsDialog(context, index);
+                  },
+                );
+              }, separatorBuilder: (BuildContext context, int index) => Divider(),
+            ),
           ),
         )
       ],
