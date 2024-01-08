@@ -18,6 +18,7 @@ class _AddInfoState extends State<AddInfo> {
   TextEditingController ageController = TextEditingController();
   TextEditingController featureController = TextEditingController();
   TextEditingController sexController = TextEditingController();
+  TextEditingController numberController = TextEditingController();
 
   String? selectedGender;
   List<String> genders = ['남','여'];
@@ -26,13 +27,14 @@ class _AddInfoState extends State<AddInfo> {
     final prefs = await SharedPreferences.getInstance();
     List<String>? savedInfo = prefs.getStringList('userInfo') ?? [];
 
-    if(nameController.text == "" || ageController.text == "") {
+    if(nameController.text == "" || numberController.text == "") {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("입력되지 않았습니다.")),
+        SnackBar(content: Text("이름과 번호는 필수항목입니다.")),
       );
     }else{
       Map<String,String> newInfo = {
         'name' : nameController.text,
+        'number' : numberController.text,
         'feature' : featureController.text,
         'age' : ageController.text,
         'sex' : selectedGender ?? '안정함',
@@ -43,6 +45,7 @@ class _AddInfoState extends State<AddInfo> {
       await prefs.setStringList('userInfo', savedInfo);
 
       nameController.clear();
+      numberController.clear();
       featureController.clear();
       ageController.clear();
       sexController.clear();
@@ -50,7 +53,7 @@ class _AddInfoState extends State<AddInfo> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("정보가 저장되었습니다!")),
       );
-      Navigator.pop(context);
+      Navigator.pop(context,true);
     }
   }
 
@@ -85,6 +88,13 @@ class _AddInfoState extends State<AddInfo> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '이름',
+                ),
+              ),
+              TextField(
+                controller: numberController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: '전화번호',
                 ),
               ),
               DropdownButtonFormField<String>(

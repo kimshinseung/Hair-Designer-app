@@ -16,6 +16,7 @@ class DetailInfo extends StatefulWidget {
 class _DetailInfoState extends State<DetailInfo> {
 
   late TextEditingController nameController;
+  late TextEditingController numberController;
   late TextEditingController sexController;
   late TextEditingController ageController;
   late TextEditingController featureController;
@@ -25,6 +26,7 @@ class _DetailInfoState extends State<DetailInfo> {
   void initState() {
     super.initState();
     nameController = TextEditingController(text: widget.userData['name']);
+    numberController = TextEditingController(text: widget.userData['number']);
     sexController = TextEditingController(text: widget.userData['sex']);
     ageController = TextEditingController(text: widget.userData['age']);
     featureController = TextEditingController(text: widget.userData['feature']);
@@ -37,6 +39,7 @@ class _DetailInfoState extends State<DetailInfo> {
 
     Map<String, String> updatedInfo = {
       'name': nameController.text,
+      'number': numberController.text,
       'sex': sexController.text,
       'age': ageController.text,
       'feature': featureController.text,
@@ -51,7 +54,9 @@ class _DetailInfoState extends State<DetailInfo> {
         Map<String, dynamic> currentItem = json.decode(savedInfo[i]);
         Map<String, String> currentItemString = currentItem.map((key, value) => MapEntry(key, value.toString()));
 
-        if (currentItemString['name'] == widget.userData['name']) {
+        //이름과 번호가 동일해야된다.
+        if (currentItemString['name'] == widget.userData['name']&&
+        currentItemString['number'] == widget.userData['number']) {
           indexUpdate = i;
           break;
         }
@@ -105,6 +110,30 @@ class _DetailInfoState extends State<DetailInfo> {
                     controller: nameController,
                     decoration: InputDecoration(
                       hintText: '이름',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text("번호:",
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 10,
+                  child: TextField(
+                    style: TextStyle(
+                        fontSize: 20
+                    ),
+                    controller: numberController,
+                    decoration: InputDecoration(
+                      hintText: '',
                     ),
                   ),
                 ),
@@ -184,7 +213,10 @@ class _DetailInfoState extends State<DetailInfo> {
             ),
             Row(
               children: [
-                Text('방문 날짜: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(lastModified.text))}'),
+                Text('최근 방문 날짜: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(lastModified.text))}',
+                style: TextStyle(
+                  fontSize: 15,
+                ),),
               ],
             ),
             SizedBox(height: 10,),

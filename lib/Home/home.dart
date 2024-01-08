@@ -118,9 +118,13 @@ class _HomePageState extends State<HomePage> {
 
   void onSearchTextChanged(String text) {
     setState(() {
-      filteredUserInfo = userInfo
-          .where((user) => user['name']!.toLowerCase().contains(text.toLowerCase()))
-          .toList();
+      filteredUserInfo = userInfo.where((user) {
+        String name = user['name']?.toLowerCase() ?? '';
+        String number = user['number']?.toLowerCase() ?? '';
+        String searchTextLower = text.toLowerCase();
+
+        return name.contains(searchTextLower) || number.contains(searchTextLower);
+      }).toList();
     });
   }
 

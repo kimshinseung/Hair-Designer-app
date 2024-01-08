@@ -52,6 +52,8 @@
   > OverlayEntry의 위치 조정 필요 : CompositedTransformTarget위젯을 활용해서 'overlay'위치에 정렬
 - 날짜형식 변경
     >DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+
+
 ## 사용 dependencies
 - image_picker: 0.6.7 sdk31버전
 -   assets: 이미지 추가
@@ -80,3 +82,5 @@
   );
 - getSharedPreferences에 데이터를 수정할때마다 이 전 데이터가 삭제되는 현상
  > indexUpdate값을 -1로 선언하고 값이 같은 데이터가 존재하면 이 값을 바꿔서 로직을 구현했다.
+- 데이터를 저장하고 다시 화면으로 돌아왔을 때 데이터가 업데이트가 안되는 현상
+    > Navigator.pop(context, true)로 pop을 하고 원래 Widget에서 value == true면 데이터를 업데이트하는 함수를 실행한다.

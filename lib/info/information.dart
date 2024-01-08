@@ -21,6 +21,10 @@ class _informationState extends State<information> {
     loadUserInfo();
   }
 
+  void updateUserInfo() async {
+    await loadUserInfo();
+  }
+
   Future<void> loadUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     List<String>? savedInfo = prefs.getStringList('userInfo') ?? [];
@@ -111,7 +115,13 @@ class _informationState extends State<information> {
                 padding: const EdgeInsets.all(25.0),
                 child: IconButton(onPressed: (){
                   Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AddInfo()),);
+                  MaterialPageRoute(builder: (context) => const AddInfo())).
+                  then((value) {
+                    //화면으로 돌아오면 업데이트한다.
+                    if(value == true) {
+                      updateUserInfo();
+                    }
+                  });
                 }, icon: Icon(Icons.add_box_rounded,size: 40,)),
               ),
             ],
@@ -128,11 +138,11 @@ class _informationState extends State<information> {
                       style: TextStyle(
                         fontSize: 20,
                       ),),
-                      Text('성별: ${userInfo[index]['sex']}',
+                      Text('번호: ${userInfo[index]['number']}',
                         style: TextStyle(
                           fontSize: 20,
                         ),),
-                      Text('나이: ${userInfo[index]['age']}',
+                      Text('성별: ${userInfo[index]['sex']}',
                         style: TextStyle(
                           fontSize: 20,
                         ),),
