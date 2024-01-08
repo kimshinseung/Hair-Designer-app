@@ -173,7 +173,6 @@ class _DetailInfoState extends State<DetailInfo> {
                     ),
                     controller: featureController,
                     decoration: InputDecoration(
-                      hintText: '특징',
                     ),
                     maxLines: 5,
                   ),
@@ -185,11 +184,7 @@ class _DetailInfoState extends State<DetailInfo> {
             ),
             Row(
               children: [
-                Expanded(
-                    child: TextField(
-                      controller: lastModified,
-                      decoration: InputDecoration(),
-                ))
+                Text('방문 날짜: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(lastModified.text))}'),
               ],
             ),
             SizedBox(height: 10,),

@@ -44,6 +44,8 @@
     > 검색창에 포커스가 맞춰지게 되면 'overlay'를 표시하고, 벗어나면 'overlay' 제거
 - 검색창 바로 밑에 결과 나오게 하기
   > OverlayEntry의 위치 조정 필요 : CompositedTransformTarget위젯을 활용해서 'overlay'위치에 정렬
+- 날짜형식 변경
+    >DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
 ## 사용 dependencies
 - image_picker: 0.6.7 sdk31버전
 -   assets: 이미지 추가
