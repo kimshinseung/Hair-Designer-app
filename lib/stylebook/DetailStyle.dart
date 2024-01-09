@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hairapp/stylebook/ShowImage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hairapp/Database/DBHelper.dart';
+
+import '../Home/ImageViewer.dart';
 // ignore_for_file: prefer_const_constructors
 // const 상수 무시
 
@@ -86,14 +89,29 @@ class _DetailStyleState extends State<DetailStyle> {
                     var imageIndex = index - 1;
                     String imagePath = images[imageIndex]['imagePath'];
                     if (imagePath.startsWith('assets/')) {
-                      return Image.asset(
-                        imagePath,
-                        fit: BoxFit.cover,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ShowImage(path: Image.asset(imagePath),)),
+                          );
+                        },
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                        ),
                       );
                     } else {
-                      return Image.file(
-                        File(imagePath),
-                        fit: BoxFit.cover,
+                      return GestureDetector(
+                        onTap: () {
+
+                        },
+                        child: Image.file(
+                          File(imagePath),
+                          fit: BoxFit.cover,
+                        ),
                       );
                     }
                   }

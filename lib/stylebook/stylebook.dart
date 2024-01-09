@@ -25,6 +25,8 @@ class _stylebookState extends State<stylebook> {
 
   List<ImageItem> imageList = [];
 
+  List<ImageItem> firstImagesInCategories = [];
+
   @override
   void initState() {
     super.initState();
@@ -34,8 +36,17 @@ class _stylebookState extends State<stylebook> {
   //데이터 불러오기
   void loadImages() async {
     var images = await helper.getAllImages();
+    var imageItems = images.map((item) => ImageItem(imagePath: item['imagePath'], category: item['category'])).toList();
+
+    // 카테고리별로 첫 번째 이미지만 선택
+    var groupedImages = <String, List<ImageItem>>{};
+    for (var image in imageItems) {
+      groupedImages.putIfAbsent(image.category, () => []).add(image);
+    }
+    firstImagesInCategories = groupedImages.entries.map((e) => e.value.first).toList();
+
     setState(() {
-      imageList = images.map((item) => ImageItem(imagePath: item['imagePath'], category: item['category'])).toList();
+      imageList = imageItems;
     });
   }
 
@@ -192,9 +203,9 @@ class _stylebookState extends State<stylebook> {
                   crossAxisSpacing: 4.0, //열사이간격
                   mainAxisSpacing: 4.0//행사이간격
                 ),
-                itemCount: imageList.length + 1,
+                itemCount: firstImagesInCategories.length + 1,
                 itemBuilder: (context,index) {
-                  if (index < imageList.length) {
+                  if (index < firstImagesInCategories.length) {
                     var imageIndex = index;
                     String imagePath = imageList[imageIndex].imagePath;
                     if (imagePath.startsWith('assets/')) {
