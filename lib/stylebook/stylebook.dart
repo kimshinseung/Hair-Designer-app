@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:hairapp/Database/DBHelper.dart';
+import 'package:hairapp/stylebook/DetailStyle.dart';
 // ignore_for_file: prefer_const_constructors
 // const 상수 무시
 
@@ -11,47 +15,141 @@ class ImageItem {
 
 class stylebook extends StatefulWidget {
   const stylebook({super.key});
-
   @override
   State<stylebook> createState() => _stylebookState();
 }
 
 class _stylebookState extends State<stylebook> {
 
-  List<ImageItem> imageList = [
-    ImageItem(imagePath: 'assets/images/logo.png', category: '남자 커트'),
-    ImageItem(imagePath: 'assets/images/logo.png', category: '여자 커트'),
-  ];
-  
+  DBHelper helper = DBHelper();
+
+  List<ImageItem> imageList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadImages();
+  }
+
+  //데이터 불러오기
+  void loadImages() async {
+    var images = await helper.getAllImages();
+    setState(() {
+      imageList = images.map((item) => ImageItem(imagePath: item['imagePath'], category: item['category'])).toList();
+    });
+  }
+
+  // 사진 삭제 함수
+  void deleteImage(ImageItem imageItem) async {
+    await helper.deleteImage(imageItem.imagePath, imageItem.category);
+    setState(() {
+      imageList.removeWhere((item) => item.imagePath == imageItem.imagePath && item.category == imageItem.category);
+    });
+  }
+
+  //데이터 조회
+  void showImages() async {
+    List<Map<String, dynamic>> images = await helper.getAllImages();
+    images.forEach((image) {
+      print('Image Path: ${image['imagePath']}, Category: ${image['category']}');
+      // 원하는 방식으로 데이터를 출력하거나 활용할 수 있습니다.
+    });
+  }
+
+  //이미지와 카테고리 추가
+  void addImageAndCategory(String imagePath, String category) {
+    helper.insertImage(imagePath, category);
+    setState(() {
+      imageList.add(ImageItem(imagePath: imagePath, category: category));
+    });
+  }
+
+  //카테고리에 해당하는 이미지 불러오기
+  void getImagesForCategory(String category) async {
+    List<Map<String, dynamic>> images = await helper.getImagesByCategory(category);
+    List<ImageItem> imageItems = images
+        .map((item) => ImageItem(imagePath: item['imagePath'], category: item['category']))
+        .toList();
+    setState(() {
+      imageList = imageItems;
+    });
+  }
+
   //카테고리 추가
   void addCategory() async {
-    String category = await showDialog(context: context,
-        builder: (context) {
-      TextEditingController categoryController = TextEditingController();
-      return AlertDialog(
-        title: Text("카테고리 추가"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: categoryController,
-              decoration: InputDecoration(hintText: "이름"),
+    String category = await showDialog(
+      context: context,
+      builder: (context) {
+        TextEditingController categoryController = TextEditingController();
+        return AlertDialog(
+          title: Text("카테고리 추가"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: categoryController,
+                decoration: InputDecoration(hintText: "이름"),
+              ),
+              // 이미지 추가
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (categoryController.text.isNotEmpty) {
+                  addImageAndCategory('assets/images/logo.png', categoryController.text);
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text("추가"),
             ),
-            //이미지 추가
+            TextButton(onPressed: () => Navigator.of(context).pop(), child: Text("취소")),
           ],
-        ),
-        actions: [
-          TextButton(onPressed: () =>Navigator.of(context).pop(), child: Text("취소")),
-          TextButton(onPressed: () => Navigator.of(context).pop(categoryController.text), child: Text("추가")),
-        ],
-      );
-    },
+        );
+      },
     );
 
     if(category != null && category.isNotEmpty) {
-      setState(() {
-        imageList.add(ImageItem(imagePath: 'assets/images/logo.png', category: category));
-      });
+      getImagesForCategory(category);
+    }
+    //데이터베이스 저장후 이미지 목록 다시 로드
+    loadImages();
+  }
+
+  // 사진 삭제 함수
+  void onImageClicked(ImageItem imageItem) async {
+    String action = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("카테고리 확인"),
+          actions: <Widget>[
+            TextButton(
+              child: Text('보기'),
+              onPressed: () {
+                Navigator.pop(context, 'view');
+              },
+            ),
+            TextButton(
+              child: Text('삭제'),
+              onPressed: () {
+                Navigator.pop(context, 'delete');
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    if (action == 'delete') {
+      deleteImage(imageItem);
+    } else if (action == 'view') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DetailStyle(categoryName: imageItem.category),
+        ),
+      );
     }
   }
 
@@ -96,22 +194,50 @@ class _stylebookState extends State<stylebook> {
                 ),
                 itemCount: imageList.length + 1,
                 itemBuilder: (context,index) {
-                  if(index<imageList.length){
-                    return Column(
-                      children: <Widget> [
-                        Expanded(child: Image.asset(
-                          imageList[index].imagePath,
-                          fit: BoxFit.cover,
+                  if (index < imageList.length) {
+                    var imageIndex = index;
+                    String imagePath = imageList[imageIndex].imagePath;
+                    if (imagePath.startsWith('assets/')) {
+                      return GestureDetector(
+                        onTap: () => onImageClicked(imageList[imageIndex]),
+                        child: Column(
+                          children: <Widget>[
+                            Expanded(
+                              child: Image.asset(
+                                imagePath,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text(
+                              imageList[imageIndex].category,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
                         ),
+                      );
+                    } else {
+                      return GestureDetector(
+                        onTap: () => onImageClicked(imageList[imageIndex]),
+                        child: Column(
+                          children: <Widget>[
+                            Expanded(
+                              child: Image.file(
+                                File(imagePath),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text(
+                              imageList[imageIndex].category,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
                         ),
-                        Text(
-                          imageList[index].category,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    );
+                      );
+                    }
                   }else {
                     return InkWell(
                        onTap: addCategory,
