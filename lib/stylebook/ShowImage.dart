@@ -2,16 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShowImage extends StatelessWidget {
-  const ShowImage({super.key, required this.path});
-  final Widget path;
-
-
+  const ShowImage({Key? key, required this.imageProvider}) : super(key: key);
+  final ImageProvider imageProvider;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: path,
+        child: Image(image: imageProvider),
       ),
     );
   }

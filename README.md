@@ -52,7 +52,12 @@
   > OverlayEntry의 위치 조정 필요 : CompositedTransformTarget위젯을 활용해서 'overlay'위치에 정렬
 - 날짜형식 변경
     >DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-
+- return ListTile(
+  title: ClipRRect(
+  borderRadius: BorderRadius.circular(15.0), // 여기서 원하는 반경으로 조절하세요
+  child: Image.file(File(imagePaths[index])),
+  ),
+    > 사진 테두리 동그랗게
 
 ## 사용 dependencies
 - image_picker: 0.6.7 sdk31버전
@@ -87,3 +92,21 @@
     > Navigator.pop(context, true)로 pop을 하고 원래 Widget에서 value == true면 데이터를 업데이트하는 함수를 실행한다.
 - statefulwidget의 인자로 받은 변수를 사용하려면 widget.변수이름 으로 접근해야 한다
     > 클래스의 상태에서는 직접적으로 상위위젯의 프로퍼티에 접근하기 위해 'widget'이라는 프리픽스를 사용해야 한다.
+- 이미지 형식이 안맞아서 띄우는 데 생기는 오류
+    >ImageProvider을 사용해 전달하면 이미지를 전달한다.
+
+
+## 공부한 내용
+- SQFlite : 관계형 데이터베이스 관리 시스템
+  1. 서버용이 아닌 클라이언트 사이드 데이터 관리 시스템이라 비교적 가벼운 형태로 관리
+  2. 장점
+     1. 로컬 기반 DB로 네트워크 사용이 필요없어 비용걱정 X
+     2. 휘발성데이터가 아니기에 데이터손실이 없다.
+     3. 쿼리를 지원하여 복잡한 데이터를 조회할 수 있다.
+  3. 단점
+     1. 다른 로컬 기반의 데이터 저장 라이브러리에 비해 속도가 떨어진다.
+  4. CREATE TABLE $tableImages(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        imagePath TEXT,
+        category TEXT
+        ) 테이블 생성

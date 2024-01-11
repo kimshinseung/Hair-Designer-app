@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<String> imagePaths = [];
   String searchText = '';
-  
+
   //필터링할 정보들
   List<Map<String, String>> userInfo = [];
   List<Map<String, String>> filteredUserInfo = [];
@@ -51,35 +51,37 @@ class _HomePageState extends State<HomePage> {
 
   OverlayEntry createOverlayEntry(BuildContext context) {
     return OverlayEntry(
-      builder: (context) => Positioned(
-        width: 213,
-        child: CompositedTransformFollower(
-          link: layerLink,
-          showWhenUnlinked: false,
-          offset: Offset(0, 48), // TextField의 높이에 따라 조정
-          child: Material(
-            elevation: 4.0,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: filteredUserInfo.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(filteredUserInfo[index]['name'] ?? ''),
-                  onTap:() {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailInfo(userData: userInfo[index]),
-                      ),
+      builder: (context) =>
+          Positioned(
+            width: 213,
+            child: CompositedTransformFollower(
+              link: layerLink,
+              showWhenUnlinked: false,
+              offset: Offset(0, 48), // TextField의 높이에 따라 조정
+              child: Material(
+                elevation: 4.0,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: filteredUserInfo.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(filteredUserInfo[index]['name'] ?? ''),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                DetailInfo(userData: userInfo[index]),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 
@@ -89,7 +91,7 @@ class _HomePageState extends State<HomePage> {
     _loadImagePaths();
     loadUserInfo();
     focusNode.addListener(() {
-      if(focusNode.hasFocus) {
+      if (focusNode.hasFocus) {
         showOverlay(context);
       } else {
         removeOverlay();
@@ -106,7 +108,8 @@ class _HomePageState extends State<HomePage> {
     for (var info in savedInfo) {
       var decoded = json.decode(info);
       if (decoded is Map<String, dynamic>) {
-        loadedInfo.add(decoded.map((key, value) => MapEntry(key, value.toString())));
+        loadedInfo.add(
+            decoded.map((key, value) => MapEntry(key, value.toString())));
       }
     }
 
@@ -123,7 +126,8 @@ class _HomePageState extends State<HomePage> {
         String number = user['number']?.toLowerCase() ?? '';
         String searchTextLower = text.toLowerCase();
 
-        return name.contains(searchTextLower) || number.contains(searchTextLower);
+        return name.contains(searchTextLower) ||
+            number.contains(searchTextLower);
       }).toList();
     });
   }
@@ -142,7 +146,7 @@ class _HomePageState extends State<HomePage> {
   void pickImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    if(image != null) {
+    if (image != null) {
       // File imageFile = File(image.path);
       addImage(File(image.path));
     }
@@ -151,7 +155,7 @@ class _HomePageState extends State<HomePage> {
   void addImage(File image) {
     //Widget imagewidget = Image.file(image);
     setState(() {
-      imagePaths.insert(0,image.path); //여기서 사진 추가하면 됨
+      imagePaths.insert(0, image.path); //여기서 사진 추가하면 됨
     });
     saveImagePaths();
   }
@@ -167,6 +171,7 @@ class _HomePageState extends State<HomePage> {
     });
     saveImagePaths();
   }
+
   void showOptionsDialog(BuildContext context, int index) {
     showDialog(
       context: context,
@@ -183,7 +188,9 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ImageViewer(path: Image.file(File(imagePaths[index])),)),
+                          builder: (context) =>
+                              ImageViewer(path: Image.file(
+                                  File(imagePaths[index])),)),
                     );
                   },
                 ),
@@ -206,63 +213,84 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.start,
-      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 40,),
+        const SizedBox(height: 40),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Image.asset('assets/images/logo.png',
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Image.asset(
+                'assets/images/logo.png',
                 width: 80,
                 height: 80,
-                fit: BoxFit.contain,),
+                fit: BoxFit.contain,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: CompositedTransformTarget(
+                  link: layerLink,
+                  child: TextField(
+                    focusNode: focusNode,
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      hintText: '이름을 입력해주세요.',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      enabledBorder: OutlineInputBorder( // 기본 상태의 테두리 색상
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(color: Color(0XffC2E1E7)),
+                      ),
+                      focusedBorder: OutlineInputBorder( // 포커스 됐을 때의 테두리 색상
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(color: Color(0XffC2E1E7)),
+                      ),
+                    ),
+                    onChanged: (text) {
+                      onSearchTextChanged(text);
+                      if (overlayEntry != null) {
+                        removeOverlay();
+                        showOverlay(context);
+                      }
+                    },
+                  ),
+                ),
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: IconButton(onPressed: pickImage, icon: Icon(Icons.add_box_rounded,size: 40,)),
+              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+              child: IconButton(
+                onPressed: pickImage,
+                icon: Icon(Icons.add_circle, size: 40,color: Color(0xffC2E1E7)),
+              ),
             ),
           ],
         ),
-        SizedBox(height: 20,),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal:100,vertical: 0),
-          child: CompositedTransformTarget(
-            link: layerLink,
-            child: TextField(
-              focusNode: focusNode,
-              controller: searchController,
-              decoration: InputDecoration(
-                hintText: '이름을 입력해주세요.',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (text) {
-                onSearchTextChanged(text);
-                if(overlayEntry != null) {
-                  removeOverlay();
-                  showOverlay(context);
-                }
-              },
-            ),
-          ),
-        ),
+        SizedBox(height: 30,),
         Expanded(
           child: Container(
             height: 529,
             child: ListView.separated(
               scrollDirection: Axis.vertical,
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(7),
               itemCount: imagePaths.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title:Image.file(File(imagePaths[index])),
-                  onTap: (){
+                  title: ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0), // 여기서 원하는 반경으로 조절하세요
+                    child: Image.file(File(imagePaths[index])),
+                  ),
+                  onTap: () {
                     showOptionsDialog(context, index);
                   },
                 );
-              }, separatorBuilder: (BuildContext context, int index) => Divider(),
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  Divider(),
             ),
           ),
         )

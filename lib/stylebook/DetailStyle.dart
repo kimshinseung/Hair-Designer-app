@@ -91,27 +91,26 @@ class _DetailStyleState extends State<DetailStyle> {
                     if (imagePath.startsWith('assets/')) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pop();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ShowImage(path: Image.asset(imagePath),)),
+                              builder: (context) => ShowImage(imageProvider: AssetImage(imagePath)),
+                            ),
                           );
                         },
-                        child: Image.asset(
-                          imagePath,
-                          fit: BoxFit.cover,
-                        ),
+                        child: Image.asset(imagePath, fit: BoxFit.cover),
                       );
                     } else {
                       return GestureDetector(
                         onTap: () {
-
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ShowImage(imageProvider: FileImage(File(imagePath))),
+                            ),
+                          );
                         },
-                        child: Image.file(
-                          File(imagePath),
-                          fit: BoxFit.cover,
-                        ),
+                        child: Image.file(File(imagePath), fit: BoxFit.cover),
                       );
                     }
                   }
