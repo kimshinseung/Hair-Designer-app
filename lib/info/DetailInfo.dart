@@ -78,26 +78,35 @@ class _DetailInfoState extends State<DetailInfo> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('수정되었습니다!')),
     );
-    Navigator.pop(context);
+    Navigator.pop(context,true);
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 40,),
+            Center(
+              child: Text("회원 정보",style:
+                TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                )
+            ),
+            ),
             Row(
               children: [
                 Expanded(
                   flex: 2,
                   child: Text("이름:",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                   ),
                   ),
                 ),
@@ -121,7 +130,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 2,
                   child: Text("번호:",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                     ),
                   ),
                 ),
@@ -145,7 +154,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 2,
                   child: Text("성별:",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                     ),),
                 ),
                 Expanded(
@@ -168,7 +177,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 2,
                   child: Text("나이:",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                     ),),
                 ),
                 Expanded(
@@ -191,7 +200,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 2,
                   child: Text("특징:",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                     ),),
                 ),
                 Expanded(

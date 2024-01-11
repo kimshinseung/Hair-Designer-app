@@ -67,7 +67,11 @@ class _informationState extends State<information> {
                     MaterialPageRoute(
                         builder: (context) => DetailInfo(userData: userInfo[index]),
                     ),
-                  );
+                  ).then((value) {
+                    if(value == true){
+                      updateUserInfo();
+                    }
+                  });
                 },
               ),
               ListTile(
