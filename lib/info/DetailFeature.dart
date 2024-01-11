@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailFeature extends StatefulWidget {
-  const DetailFeature({super.key, required String feature});
-
+  final String feature;
+  const DetailFeature({Key? key, required this.feature}) : super(key: key);
   @override
   State<DetailFeature> createState() => _DetailFeatureState();
 }
@@ -11,8 +11,12 @@ class DetailFeature extends StatefulWidget {
 class _DetailFeatureState extends State<DetailFeature> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-
+    return Scaffold(
+      body: Column(
+        children: [
+          Text(widget.feature),
+        ],
+      ),
     );
   }
 }

@@ -119,7 +119,6 @@ class _DetailInfoState extends State<DetailInfo> {
                     ),
                     controller: nameController,
                     decoration: InputDecoration(
-                      hintText: '이름',
                     ),
                   ),
                 ),
@@ -166,7 +165,6 @@ class _DetailInfoState extends State<DetailInfo> {
                     ),
                     controller: sexController,
                     decoration: InputDecoration(
-                      hintText: '성별',
                     ),
                   ),
                 ),
@@ -189,7 +187,6 @@ class _DetailInfoState extends State<DetailInfo> {
                     ),
                     controller: ageController,
                     decoration: InputDecoration(
-                      hintText: '나이',
                     ),
                   ),
                 ),
@@ -239,7 +236,7 @@ class _DetailInfoState extends State<DetailInfo> {
               ],
             ),
             SizedBox(height: 10,),
-            ElevatedButton(onPressed: saveChanges, child: Text('수정완료'),)
+            Center(child: ElevatedButton(onPressed: saveChanges, child: Text('수정완료'),))
           ],
         ),
       ),
