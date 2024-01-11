@@ -22,6 +22,8 @@ class _DetailInfoState extends State<DetailInfo> {
   late TextEditingController ageController;
   late TextEditingController featureController;
   late TextEditingController lastModified;
+  late TextEditingController newFeatureController;
+  late List<String> featureList;
 
   @override
   void initState() {
@@ -32,7 +34,11 @@ class _DetailInfoState extends State<DetailInfo> {
     ageController = TextEditingController(text: widget.userData['age']);
     featureController = TextEditingController(text: widget.userData['feature']);
     lastModified = TextEditingController(text: widget.userData['lastEdited']);
+    newFeatureController = TextEditingController();
+    featureList = (widget.userData['feature'] ?? '').split(','); // 기존 특징을 배열로 변환
   }
+
+
 
   void saveChanges() async {
     final prefs = await SharedPreferences.getInstance();
@@ -43,7 +49,7 @@ class _DetailInfoState extends State<DetailInfo> {
       'number': numberController.text,
       'sex': sexController.text,
       'age': ageController.text,
-      'feature': featureController.text,
+      'feature': featureList.join(', '),
       'lastEdited' : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
     };
 
@@ -72,6 +78,12 @@ class _DetailInfoState extends State<DetailInfo> {
     } else {
       print("item to update not found");
     }
+
+    // Save features to SharedPreferences
+    List<String> updatedFeatures = prefs.getStringList('features') ?? [];
+    updatedFeatures.add(featureController.text);
+    prefs.setStringList('features', updatedFeatures);
+    print(updatedFeatures);
 
     await prefs.setStringList('userInfo', savedInfo);
     await prefs.setString('lastModified', DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()));
@@ -197,29 +209,69 @@ class _DetailInfoState extends State<DetailInfo> {
                 Expanded(
                   flex: 2,
                   child: Text("특징:",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),),
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
                 Expanded(
                   flex: 10,
-                  child: TextField(
-                    readOnly: true,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailFeature(feature: featureController.text)),
-                      );
+                  child: Container(
+                    height: 170, // 이 부분의 높이를 조절하여 특징 목록의 크기를 설정합니다.
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: featureList.map((feature) {
+                          int index = featureList.indexOf(feature);
+                          return ListTile(
+                            onTap: (){},
+                            title: Text(feature, style: TextStyle(fontSize: 15),
+                              overflow: TextOverflow.ellipsis,),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                setState(() {
+                                  featureList.removeAt(index);
+                                });
+                              },
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                    child: Text("특징 추가 :",style: TextStyle(
+                      fontSize: 14,
+                    ),)),
+                Expanded(
+                  flex: 8,
+                    child: TextField(
+                      controller: newFeatureController,
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                      maxLines: 3,
+                ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: IconButton(
+                    icon: Icon(Icons.add_circle, size: 40),
+                    onPressed: () {
+                      setState(() {
+                        String newFeature = newFeatureController.text.trim();
+                        if (newFeature.isNotEmpty) {
+                          print("aa");
+                          featureList.add(newFeature);
+                          newFeatureController.clear();
+                        }
+                      });
+                      print(featureList);
                     },
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                    controller: featureController,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(8.0),
-                    ),
-                    maxLines: 7, // Set the max lines to 5
                   ),
                 ),
               ],

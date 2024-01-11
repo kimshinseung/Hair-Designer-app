@@ -58,7 +58,8 @@
   child: Image.file(File(imagePaths[index])),
   ),
     > 사진 테두리 동그랗게
-
+- overflow: TextOverflow.ellipsis,
+    > 문자열의 길이가 overflow가 날경우 ...으로 대체
 ## 사용 dependencies
 - image_picker: 0.6.7 sdk31버전
 -   assets: 이미지 추가
@@ -94,7 +95,9 @@
     > 클래스의 상태에서는 직접적으로 상위위젯의 프로퍼티에 접근하기 위해 'widget'이라는 프리픽스를 사용해야 한다.
 - 이미지 형식이 안맞아서 띄우는 데 생기는 오류
     >ImageProvider을 사용해 전달하면 이미지를 전달한다.
-
+- 텍스트가 계속 추가되면서 ListView.builder크기가 한없이 커지는 경우
+    > Container와 SingleChildScrollView를 조합해서 변경
+    > Container의 높이 속성을 조절하여 설정할 수 있다.
 
 ## 공부한 내용
 - SQFlite : 관계형 데이터베이스 관리 시스템
