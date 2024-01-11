@@ -23,7 +23,7 @@ class _DetailInfoState extends State<DetailInfo> {
   late TextEditingController featureController;
   late TextEditingController lastModified;
   late TextEditingController newFeatureController;
-  late List<String> featureList;
+  late List<Map<String, String>> featureList;
 
   @override
   void initState() {
@@ -35,7 +35,14 @@ class _DetailInfoState extends State<DetailInfo> {
     featureController = TextEditingController(text: widget.userData['feature']);
     lastModified = TextEditingController(text: widget.userData['lastEdited']);
     newFeatureController = TextEditingController();
-    featureList = (widget.userData['feature'] ?? '').split(','); // 기존 특징을 배열로 변환
+    
+    //특징을 배열로 만들고 Map을 활용해서 text와 날짜를 구분함
+    featureList = (widget.userData['feature'] ?? '').split(',').map((feature) {
+      return {
+        'feature': feature,
+        'date': DateFormat('yyyy-MM-dd').format(DateTime.now()), // 현재 날짜로 초기화
+      };
+    }).toList();
   }
 
 
@@ -218,12 +225,26 @@ class _DetailInfoState extends State<DetailInfo> {
                     height: 170, // 이 부분의 높이를 조절하여 특징 목록의 크기를 설정합니다.
                     child: SingleChildScrollView(
                       child: Column(
-                        children: featureList.map((feature) {
-                          int index = featureList.indexOf(feature);
+                        children: featureList.map((map) {
+                          int index = featureList.indexOf(map);
                           return ListTile(
-                            onTap: (){},
-                            title: Text(feature, style: TextStyle(fontSize: 15),
-                              overflow: TextOverflow.ellipsis,),
+                            onTap: () {},
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    map['feature']!,
+                                    style: TextStyle(fontSize: 15),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  map['date']!, // 여기에 날짜를 표시
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
                             trailing: IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () {
@@ -265,8 +286,10 @@ class _DetailInfoState extends State<DetailInfo> {
                       setState(() {
                         String newFeature = newFeatureController.text.trim();
                         if (newFeature.isNotEmpty) {
-                          print("aa");
-                          featureList.add(newFeature);
+                          featureList.add({
+                            'feature': newFeature,
+                            'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                          });
                           newFeatureController.clear();
                         }
                       });
