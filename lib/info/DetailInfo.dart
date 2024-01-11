@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hairapp/info/DetailFeature.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert'; // For JSON encoding and decoding
@@ -206,13 +207,22 @@ class _DetailInfoState extends State<DetailInfo> {
                 Expanded(
                   flex: 10,
                   child: TextField(
+                    readOnly: true,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailFeature(feature: featureController.text)),
+                      );
+                    },
                     style: TextStyle(
-                        fontSize: 20
+                      fontSize: 20,
                     ),
                     controller: featureController,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(8.0),
                     ),
-                    maxLines: 5,
+                    maxLines: 7, // Set the max lines to 5
                   ),
                 ),
               ],
