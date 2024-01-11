@@ -35,7 +35,10 @@ class _AddInfoState extends State<AddInfo> {
       Map<String,String> newInfo = {
         'name' : nameController.text,
         'number' : numberController.text,
-        'feature' : featureController.text,
+        'feature': jsonEncode({
+          'feature': featureController.text,
+          'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        }),
         'age' : ageController.text,
         'sex' : selectedGender ?? '안정함',
         'lastEdited' : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),

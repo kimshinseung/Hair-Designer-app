@@ -35,14 +35,25 @@ class _DetailInfoState extends State<DetailInfo> {
     featureController = TextEditingController(text: widget.userData['feature']);
     lastModified = TextEditingController(text: widget.userData['lastEdited']);
     newFeatureController = TextEditingController();
-    
-    //특징을 배열로 만들고 Map을 활용해서 text와 날짜를 구분함
-    featureList = (widget.userData['feature'] ?? '').split(',').map((feature) {
-      return {
-        'feature': feature,
-        'date': DateFormat('yyyy-MM-dd').format(DateTime.now()), // 현재 날짜로 초기화
-      };
-    }).toList();
+
+    // JSON 문자열을 파싱하여 featureList를 복원
+    String featuresJson = widget.userData['feature'] ?? '[]';
+    var decodedData = jsonDecode(featuresJson);
+    print(decodedData);
+    if (decodedData is List) {
+      featureList = decodedData.map((item) {
+        if (item is Map<String, dynamic>) {
+          return {
+            'feature': item['feature']?.toString() ?? '',
+            'date': item['date']?.toString() ?? '',
+          };
+        }
+        return {'feature': '', 'date': ''}; // 오류 처리 또는 다른 로직
+      }).toList();
+    } else {
+      featureList = [];
+      // 오류 처리 또는 다른 로직
+    }
   }
 
 
@@ -51,12 +62,17 @@ class _DetailInfoState extends State<DetailInfo> {
     final prefs = await SharedPreferences.getInstance();
     List<String>? savedInfo = prefs.getStringList('userInfo') ?? [];
 
+    String featuresJson = jsonEncode(featureList.map((feature) => {
+      'feature': feature['feature'],
+      'date': feature['date']
+    }).toList());
+
     Map<String, String> updatedInfo = {
       'name': nameController.text,
       'number': numberController.text,
       'sex': sexController.text,
       'age': ageController.text,
-      'feature': featureList.join(', '),
+      'feature': featuresJson,
       'lastEdited' : DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
     };
 
