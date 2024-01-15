@@ -2,19 +2,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailFeature extends StatefulWidget {
-  final String feature;
-  const DetailFeature({Key? key, required this.feature}) : super(key: key);
+  final Map<String, String> featureData;
+
+  DetailFeature({Key? key, required this.featureData}) : super(key: key);
   @override
   State<DetailFeature> createState() => _DetailFeatureState();
 }
 
 class _DetailFeatureState extends State<DetailFeature> {
+
   @override
   Widget build(BuildContext context) {
+    String feature = widget.featureData['feature'] ?? 'Unknown';
+    String date = widget.featureData['date'] ?? 'Unknown';
+
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(widget.feature),
+          SizedBox(height: 80,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Text(date,style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey,
+            ),
+            ),
+          ),
+          SizedBox(height: 20,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Text(feature, style: TextStyle(
+              fontSize: 28,
+            ),),
+          ),
         ],
       ),
     );

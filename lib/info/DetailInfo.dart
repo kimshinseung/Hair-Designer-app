@@ -91,15 +91,12 @@ class _DetailInfoState extends State<DetailInfo> {
           break;
         }
       } catch (e) {
-        // Handle potential JSON decode errors
-        print("Error decoding JSON: $e");
       }
     }
 
     if(indexUpdate != -1) {
       savedInfo[indexUpdate] = json.encode(updatedInfo);
     } else {
-      print("item to update not found");
     }
 
     // Save features to SharedPreferences
@@ -244,7 +241,9 @@ class _DetailInfoState extends State<DetailInfo> {
                         children: featureList.map((map) {
                           int index = featureList.indexOf(map);
                           return ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DetailFeature(featureData: map,),),);
+                            },
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
