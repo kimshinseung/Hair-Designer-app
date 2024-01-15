@@ -111,7 +111,7 @@ class _informationState extends State<information> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20),
-                child: Image.asset('assets/images/logo2.png',
+                child: Image.asset('assets/images/logo4.png',
                   width: 80,
                   height: 80,
                   fit: BoxFit.contain,),
@@ -127,7 +127,7 @@ class _informationState extends State<information> {
                       updateUserInfo();
                     }
                   });
-                }, icon: Icon(Icons.add_box_rounded,size: 40,)),
+                }, icon: Icon(Icons.add_box_rounded,size: 40,color: Color(0XffC2E1E7),)),
               ),
             ],
           ),

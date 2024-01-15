@@ -197,7 +197,7 @@ class _stylebookState extends State<stylebook> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Image.asset('assets/images/logo2.png',
+                  child: Image.asset('assets/images/logo4.png',
                     width: 80,
                     height: 80,
                     fit: BoxFit.contain,),
@@ -205,6 +205,7 @@ class _stylebookState extends State<stylebook> {
                 SizedBox(width: 90,),
                 Text("스타일북",style: TextStyle(
                   fontSize: 24,
+                  color: Color(0XffC2E1E7),
                   shadows: [
                     Shadow(
                       offset: Offset(1.0,1.0),

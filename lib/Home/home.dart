@@ -214,14 +214,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 40),
+        const SizedBox(height: 50),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Image.asset(
-                'assets/images/logo2.png',
+                'assets/images/logo4.png',
                 width: 80,
                 height: 80,
                 fit: BoxFit.contain,
