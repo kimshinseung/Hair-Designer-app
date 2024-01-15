@@ -102,6 +102,7 @@ class _informationState extends State<information> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           const SizedBox(height: 50,),
@@ -110,7 +111,7 @@ class _informationState extends State<information> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20),
-                child: Image.asset('assets/images/logo.png',
+                child: Image.asset('assets/images/logo2.png',
                   width: 80,
                   height: 80,
                   fit: BoxFit.contain,),
