@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:collection/collection.dart'; // collection 패키지를 import 해야 합니다.
 
 import 'package:flutter/material.dart';
 import 'package:hairapp/Database/DBHelper.dart';
@@ -44,7 +45,7 @@ class _stylebookState extends State<stylebook> {
       groupedImages.putIfAbsent(image.category, () => []).add(image);
     }
     firstImagesInCategories = groupedImages.entries.map((e) => e.value.first).toList();
-
+   // print(firstImagesInCategories);
     setState(() {
       imageList = imageItems;
     });
@@ -54,7 +55,14 @@ class _stylebookState extends State<stylebook> {
   void deleteImage(ImageItem imageItem) async {
     await helper.deleteImage(imageItem.imagePath, imageItem.category);
     setState(() {
-      imageList.removeWhere((item) => item.imagePath == imageItem.imagePath && item.category == imageItem.category);
+      imageList.removeWhere((item) =>
+      item.imagePath == imageItem.imagePath &&
+          item.category == imageItem.category);
+
+      // 삭제된 이미지를 firstImagesInCategories에서도 제거
+      firstImagesInCategories.removeWhere((item) =>
+      item.imagePath == imageItem.imagePath &&
+          item.category == imageItem.category);
     });
   }
 
@@ -72,6 +80,12 @@ class _stylebookState extends State<stylebook> {
     helper.insertImage(imagePath, category);
     setState(() {
       imageList.add(ImageItem(imagePath: imagePath, category: category));
+
+      // 이미지가 추가된 카테고리가 firstImagesInCategories에 없으면 추가
+      var existingCategoryImage = firstImagesInCategories.firstWhereOrNull((item) => item.category == category);
+      if (existingCategoryImage == null) {
+        firstImagesInCategories.add(ImageItem(imagePath: imagePath, category: category));
+      }
     });
   }
 
@@ -86,9 +100,8 @@ class _stylebookState extends State<stylebook> {
     });
   }
 
-  //카테고리 추가
   void addCategory() async {
-    String category = await showDialog(
+    String? category = await showDialog(
       context: context,
       builder: (context) {
         TextEditingController categoryController = TextEditingController();
@@ -101,15 +114,20 @@ class _stylebookState extends State<stylebook> {
                 controller: categoryController,
                 decoration: InputDecoration(hintText: "이름"),
               ),
-              // 이미지 추가
             ],
           ),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 if (categoryController.text.isNotEmpty) {
-                  addImageAndCategory('assets/images/logo.png', categoryController.text);
-                  Navigator.of(context).pop();
+                  // 새 카테고리에 대한 이미지 추가
+                  String defaultImagePath = 'assets/images/logo.png'; // 기본 이미지 경로 설정
+                  addImageAndCategory(defaultImagePath, categoryController.text);
+
+                  // 이미지 추가 후 해당 카테고리 이미지 로드
+                  getImagesForCategory(categoryController.text);
+
+                  Navigator.of(context).pop(categoryController.text);
                 }
               },
               child: Text("추가"),
@@ -120,10 +138,11 @@ class _stylebookState extends State<stylebook> {
       },
     );
 
-    if(category != null && category.isNotEmpty) {
+    if (category != null && category.isNotEmpty) {
       getImagesForCategory(category);
     }
-    //데이터베이스 저장후 이미지 목록 다시 로드
+
+    // 데이터베이스 저장 후 이미지 목록 다시 로드
     loadImages();
   }
 
@@ -206,11 +225,11 @@ class _stylebookState extends State<stylebook> {
                 itemCount: firstImagesInCategories.length + 1,
                 itemBuilder: (context,index) {
                   if (index < firstImagesInCategories.length) {
-                    var imageIndex = index;
-                    String imagePath = imageList[imageIndex].imagePath;
+                    var imageItem = firstImagesInCategories[index];
+                    String imagePath = imageItem.imagePath;
                     if (imagePath.startsWith('assets/')) {
                       return GestureDetector(
-                        onTap: () => onImageClicked(imageList[imageIndex]),
+                        onTap: () => onImageClicked(imageItem),
                         child: Column(
                           children: <Widget>[
                             Expanded(
@@ -220,7 +239,7 @@ class _stylebookState extends State<stylebook> {
                               ),
                             ),
                             Text(
-                              imageList[imageIndex].category,
+                              imageItem.category,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -228,9 +247,9 @@ class _stylebookState extends State<stylebook> {
                           ],
                         ),
                       );
-                    } else {
+                    }else {
                       return GestureDetector(
-                        onTap: () => onImageClicked(imageList[imageIndex]),
+                        onTap: () => onImageClicked(imageItem),
                         child: Column(
                           children: <Widget>[
                             Expanded(
@@ -240,7 +259,7 @@ class _stylebookState extends State<stylebook> {
                               ),
                             ),
                             Text(
-                              imageList[imageIndex].category,
+                              imageItem.category,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
