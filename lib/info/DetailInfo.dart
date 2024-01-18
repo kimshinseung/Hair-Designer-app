@@ -129,7 +129,7 @@ class _DetailInfoState extends State<DetailInfo> {
               child: Text("회원 정보",style:
                 TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 25,
+                  fontSize: 35,
                 )
             ),
             ),
@@ -139,6 +139,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 2,
                   child: Text("이름:",
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                   ),
@@ -147,7 +148,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 10,
                   child: TextField(
                     style: TextStyle(
-                      fontSize: 20
+                      fontSize: 22,
                     ),
                     controller: nameController,
                     decoration: InputDecoration(
@@ -162,6 +163,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 2,
                   child: Text("번호:",
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
@@ -170,7 +172,8 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 10,
                   child: TextField(
                     style: TextStyle(
-                        fontSize: 20
+                        fontSize: 22,
+
                     ),
                     controller: numberController,
                     decoration: InputDecoration(
@@ -186,6 +189,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 2,
                   child: Text("성별:",
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),),
                 ),
@@ -193,7 +197,8 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 10,
                   child: TextField(
                     style: TextStyle(
-                        fontSize: 20
+                        fontSize: 22,
+
                     ),
                     controller: sexController,
                     decoration: InputDecoration(
@@ -208,6 +213,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 2,
                   child: Text("나이:",
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),),
                 ),
@@ -215,7 +221,7 @@ class _DetailInfoState extends State<DetailInfo> {
                   flex: 10,
                   child: TextField(
                     style: TextStyle(
-                        fontSize: 20
+                        fontSize: 22,
                     ),
                     controller: ageController,
                     decoration: InputDecoration(
@@ -229,7 +235,9 @@ class _DetailInfoState extends State<DetailInfo> {
                 Expanded(
                   flex: 2,
                   child: Text("특징:",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,),
                   ),
                 ),
                 Expanded(
@@ -250,13 +258,14 @@ class _DetailInfoState extends State<DetailInfo> {
                                 Expanded(
                                   child: Text(
                                     map['feature']!,
-                                    style: TextStyle(fontSize: 15),
+                                    style: TextStyle(fontSize: 22,
+                                    ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 Text(
                                   map['date']!, // 여기에 날짜를 표시
-                                  style: TextStyle(fontSize: 12),
+                                  style: TextStyle(fontSize: 16),
                                 ),
                               ],
                             ),
@@ -281,14 +290,15 @@ class _DetailInfoState extends State<DetailInfo> {
                 Expanded(
                   flex: 2,
                     child: Text("특징 추가 :",style: TextStyle(
-                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),)),
                 Expanded(
                   flex: 8,
                     child: TextField(
                       controller: newFeatureController,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 17,
                       ),
                       maxLines: 3,
                 ),
@@ -315,18 +325,22 @@ class _DetailInfoState extends State<DetailInfo> {
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 40,
             ),
             Row(
               children: [
                 Text('최근 방문 날짜: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(lastModified.text))}',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
                 ),),
               ],
             ),
             SizedBox(height: 10,),
-            Center(child: ElevatedButton(onPressed: saveChanges, child: Text('수정완료'),))
+            Center(child: ElevatedButton(onPressed: saveChanges, child: Text('수정완료',style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold
+            ),),))
           ],
         ),
       ),

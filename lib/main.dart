@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'gyuri'),
       debugShowCheckedModeBanner: false, //debug표시 없애기
       home:  HomeScreen(
       ),

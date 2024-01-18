@@ -21,8 +21,8 @@
    > 각 헤어스타일별로 사진을 저장하게
     > SQFlite DB를 사용해서 데이터 저장
 ## 디자인
- - 메인 컬러 #BD9DCF
- - 폰트 - 나눔손글씨 암스테르담
+ - 메인 컬러 Color(0XffC2E1E7)
+ - 폰트 - 규리의 일기체
 
 
 ## 코드 설명
@@ -60,6 +60,10 @@
     > 사진 테두리 동그랗게
 - overflow: TextOverflow.ellipsis,
     > 문자열의 길이가 overflow가 날경우 ...으로 대체
+- theme: ThemeData(fontFamily: 'gyuri'),
+    > 전체 앱의 폰트를 변경
+
+
 ## 사용 dependencies
 - image_picker: 0.6.7 sdk31버전
 -   assets: 이미지 추가

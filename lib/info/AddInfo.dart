@@ -76,9 +76,10 @@ class _AddInfoState extends State<AddInfo> {
                   height: 80,
                   fit: BoxFit.contain,),
               ),
-              SizedBox(width: 70,),
+              SizedBox(width: 80,),
               Text("정보 등록",style: TextStyle(
-                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                fontSize: 35,
               ),
               ),
             ],
@@ -87,6 +88,10 @@ class _AddInfoState extends State<AddInfo> {
           Column(
             children: [
               TextField(
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
                 controller: nameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -94,6 +99,10 @@ class _AddInfoState extends State<AddInfo> {
                 ),
               ),
               TextField(
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
                 controller: numberController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -109,7 +118,10 @@ class _AddInfoState extends State<AddInfo> {
                 items: genders.map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value),
+                    child: Text(value,style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
@@ -119,6 +131,10 @@ class _AddInfoState extends State<AddInfo> {
                 },
               ),
               TextField(
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
                 controller: ageController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -127,6 +143,10 @@ class _AddInfoState extends State<AddInfo> {
                 keyboardType: TextInputType.number,
               ),
               TextField(
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
                 controller: featureController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),

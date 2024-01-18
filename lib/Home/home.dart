@@ -182,7 +182,10 @@ class _HomePageState extends State<HomePage> {
             child: ListBody(
               children: <Widget>[
                 GestureDetector(
-                  child: Text('보기'),
+                  child: Text('보기',style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),),
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.push(
@@ -196,7 +199,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Padding(padding: EdgeInsets.all(8.0)),
                 GestureDetector(
-                  child: Text('삭제'),
+                  child: Text('삭제',style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),),
                   onTap: () {
                     Navigator.of(context).pop();
                     removeImagePath(index);
@@ -233,11 +239,14 @@ class _HomePageState extends State<HomePage> {
                 child: CompositedTransformTarget(
                   link: layerLink,
                   child: TextField(
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                     focusNode: focusNode,
                     controller: searchController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      hintText: '이름을 입력해주세요.',
+                      hintText: '이름을 입력해주세요.',suffixStyle: TextStyle(),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                       ),

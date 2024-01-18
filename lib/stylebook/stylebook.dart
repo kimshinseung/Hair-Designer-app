@@ -152,16 +152,25 @@ class _stylebookState extends State<stylebook> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("카테고리 확인"),
+          title: Text("카테고리 확인",style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),),
           actions: <Widget>[
             TextButton(
-              child: Text('보기'),
+              child: Text('보기',style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),),
               onPressed: () {
                 Navigator.pop(context, 'view');
               },
             ),
             TextButton(
-              child: Text('삭제'),
+              child: Text('삭제',style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),),
               onPressed: () {
                 Navigator.pop(context, 'delete');
               },
@@ -202,9 +211,10 @@ class _stylebookState extends State<stylebook> {
                     height: 80,
                     fit: BoxFit.contain,),
                 ),
-                SizedBox(width: 90,),
+                SizedBox(width: 70,),
                 Text("StyleBook",style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
                   color: Color(0XffC2E1E7),
                   shadows: [
                     Shadow(
@@ -243,6 +253,7 @@ class _stylebookState extends State<stylebook> {
                             Text(
                               imageItem.category,
                               style: TextStyle(
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             )
@@ -263,6 +274,7 @@ class _stylebookState extends State<stylebook> {
                             Text(
                               imageItem.category,
                               style: TextStyle(
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             )

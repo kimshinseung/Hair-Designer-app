@@ -55,7 +55,8 @@ class _DetailStyleState extends State<DetailStyle> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(widget.categoryName,style: TextStyle(
-                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
                   shadows: [
                     Shadow(
                       offset: Offset(1.0,1.0),

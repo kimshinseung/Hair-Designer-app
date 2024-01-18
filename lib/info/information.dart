@@ -54,12 +54,18 @@ class _informationState extends State<information> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('설정'),
+          title: Text('설정',style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 23,
+          ),),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text('보기 및 수정'),
+                title: Text('보기 및 수정',style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.push(
@@ -75,7 +81,10 @@ class _informationState extends State<information> {
                 },
               ),
               ListTile(
-                title: Text('삭제'),
+                title: Text('삭제',style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),),
                 onTap: () {
                   setState(() {
                     userInfo.removeAt(index); // Remove the item
@@ -141,15 +150,15 @@ class _informationState extends State<information> {
                     children: [
                       Text('이름: ${userInfo[index]['name']}',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 25,
                       ),),
                       Text('번호: ${userInfo[index]['number']}',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                         ),),
                       Text('성별: ${userInfo[index]['sex']}',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                         ),),
                     ],
                   ),

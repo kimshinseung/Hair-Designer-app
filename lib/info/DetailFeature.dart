@@ -25,7 +25,8 @@ class _DetailFeatureState extends State<DetailFeature> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Text(date,style: TextStyle(
-              fontSize: 18,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
               color: Colors.grey,
             ),
             ),
@@ -34,7 +35,8 @@ class _DetailFeatureState extends State<DetailFeature> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Text(feature, style: TextStyle(
-              fontSize: 28,
+                fontSize: 35,
+                fontWeight: FontWeight.bold
             ),),
           ),
         ],
