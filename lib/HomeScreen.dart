@@ -52,9 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.only(bottom: 10,top: 5),
             child: const TabBar(
               indicatorSize: TabBarIndicatorSize.label,
-              indicatorColor: Color(0xffBD9DCF),
+              indicatorColor: Color(0XffC2E1E7),
               indicatorWeight: 2,
-              labelColor: Color(0xffBD9DCF),
+              labelColor: Color(0XffC2E1E7),
               unselectedLabelColor: Colors.white,
               labelStyle: TextStyle(
                 fontSize: 13,

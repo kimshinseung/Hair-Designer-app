@@ -203,7 +203,7 @@ class _stylebookState extends State<stylebook> {
                     fit: BoxFit.contain,),
                 ),
                 SizedBox(width: 90,),
-                Text("스타일북",style: TextStyle(
+                Text("StyleBook",style: TextStyle(
                   fontSize: 24,
                   color: Color(0XffC2E1E7),
                   shadows: [
