@@ -337,7 +337,8 @@ class _DetailInfoState extends State<DetailInfo> {
               ],
             ),
             SizedBox(height: 10,),
-            Center(child: ElevatedButton(onPressed: saveChanges, child: Text('수정완료',style: TextStyle(
+            Center(child: ElevatedButton(onPressed:
+            saveChanges, child: Text('수정완료',style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold
             ),),))

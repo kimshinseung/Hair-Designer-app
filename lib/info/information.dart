@@ -20,6 +20,9 @@ class _informationState extends State<information> {
     super.initState();
     loadUserInfo();
   }
+  void onDestory() {
+    Navigator.pop(context);
+  }
 
   void updateUserInfo() async {
     await loadUserInfo();

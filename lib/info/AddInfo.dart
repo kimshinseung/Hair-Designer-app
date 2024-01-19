@@ -114,6 +114,10 @@ class _AddInfoState extends State<AddInfo> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '성별',
+                  labelStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  )
                 ),
                 items: genders.map((String value) {
                   return DropdownMenuItem<String>(
@@ -154,7 +158,11 @@ class _AddInfoState extends State<AddInfo> {
                 ),
                 maxLines: 5,
               ),
-              ElevatedButton(onPressed: save, child: Text("등록하기")),
+              SizedBox(height: 40,),
+              ElevatedButton(onPressed: save, child: Text("등록하기",style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold
+              ),)),
             ],
           )
         ],

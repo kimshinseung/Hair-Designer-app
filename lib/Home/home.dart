@@ -39,6 +39,13 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  //백그라운트 탭시 오버레이 제거
+  void onBackgroundTap() {
+    if(overlayEntry != null) {
+      removeOverlay();
+    }
+  }
+
   void showOverlay(BuildContext context) {
     overlayEntry = createOverlayEntry(context);
     Overlay.of(context)?.insert(overlayEntry!);
@@ -67,7 +74,6 @@ class _HomePageState extends State<HomePage> {
                     return ListTile(
                       title: Text(filteredUserInfo[index]['name'] ?? ''),
                       onTap: () {
-                        Navigator.of(context).pop();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -88,8 +94,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadImagePaths();
     loadUserInfo();
+    _loadImagePaths();
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         showOverlay(context);
@@ -120,6 +126,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onSearchTextChanged(String text) {
+    if(text.isEmpty) {
+      removeOverlay();
+    } else {
+      if(overlayEntry == null) {
+        showOverlay(context);
+      }
+    }
     setState(() {
       filteredUserInfo = userInfo.where((user) {
         String name = user['name']?.toLowerCase() ?? '';
@@ -218,92 +231,97 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 50),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GestureDetector(
+      onTap: onBackgroundTap,
+      child: Scaffold(
+        body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Image.asset(
-                'assets/images/logo4.png',
-                width: 80,
-                height: 80,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: CompositedTransformTarget(
-                  link: layerLink,
-                  child: TextField(
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    focusNode: focusNode,
-                    controller: searchController,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      hintText: '이름을 입력해주세요.',suffixStyle: TextStyle(),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      enabledBorder: OutlineInputBorder( // 기본 상태의 테두리 색상
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: Color(0XffC2E1E7)),
-                      ),
-                      focusedBorder: OutlineInputBorder( // 포커스 됐을 때의 테두리 색상
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: Color(0XffC2E1E7)),
-                      ),
-                    ),
-                    onChanged: (text) {
-                      onSearchTextChanged(text);
-                      if (overlayEntry != null) {
-                        removeOverlay();
-                        showOverlay(context);
-                      }
-                    },
+            const SizedBox(height: 50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Image.asset(
+                    'assets/images/logo4.png',
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.contain,
                   ),
                 ),
-              ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: CompositedTransformTarget(
+                      link: layerLink,
+                      child: TextField(
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        focusNode: focusNode,
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          hintText: '이름을 입력해주세요.',suffixStyle: TextStyle(),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          enabledBorder: OutlineInputBorder( // 기본 상태의 테두리 색상
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(color: Color(0XffC2E1E7)),
+                          ),
+                          focusedBorder: OutlineInputBorder( // 포커스 됐을 때의 테두리 색상
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(color: Color(0XffC2E1E7)),
+                          ),
+                        ),
+                        onChanged: (text) {
+                          onSearchTextChanged(text);
+                          if (overlayEntry != null) {
+                            removeOverlay();
+                            showOverlay(context);
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                  child: IconButton(
+                    onPressed: pickImage,
+                    icon: Icon(Icons.add_circle, size: 40,color: Color(0xffC2E1E7)),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-              child: IconButton(
-                onPressed: pickImage,
-                icon: Icon(Icons.add_circle, size: 40,color: Color(0xffC2E1E7)),
+            SizedBox(height: 30,),
+            Expanded(
+              child: SizedBox(
+                height: 529,
+                child: ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  padding: EdgeInsets.all(7),
+                  itemCount: imagePaths.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0), // 여기서 원하는 반경으로 조절하세요
+                        child: Image.file(File(imagePaths[index])),
+                      ),
+                      onTap: () {
+                        showOptionsDialog(context, index);
+                      },
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(),
+                ),
               ),
-            ),
+            )
           ],
         ),
-        SizedBox(height: 30,),
-        Expanded(
-          child: SizedBox(
-            height: 529,
-            child: ListView.separated(
-              scrollDirection: Axis.vertical,
-              padding: EdgeInsets.all(7),
-              itemCount: imagePaths.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0), // 여기서 원하는 반경으로 조절하세요
-                    child: Image.file(File(imagePaths[index])),
-                  ),
-                  onTap: () {
-                    showOptionsDialog(context, index);
-                  },
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) =>
-                  Divider(),
-            ),
-          ),
-        )
-      ],
+      ),
     );
   }
 }

@@ -17,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -57,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
               labelColor: Color(0XffC2E1E7),
               unselectedLabelColor: Colors.white,
               labelStyle: TextStyle(
-                fontSize: 13,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'gyuri',
               ),
               tabs: [
                 Tab(
