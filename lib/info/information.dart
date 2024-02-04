@@ -153,14 +153,17 @@ class _informationState extends State<information> {
                     children: [
                       Text('이름: ${userInfo[index]['name']}',
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: 25,
                       ),),
                       Text('번호: ${userInfo[index]['number']}',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 25,
                         ),),
                       Text('성별: ${userInfo[index]['sex']}',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 25,
                         ),),
                     ],

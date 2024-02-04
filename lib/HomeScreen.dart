@@ -64,24 +64,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 Tab(
                   icon: Icon(
                     Icons.home_outlined,
+                    size: 35,
                   ),
-                  text: '홈',
                 ),
                 Tab(
-                  icon: Icon(Icons.calculate_outlined),
-                  text: '계산기',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.perm_device_information,
-                  ),
-                  text: '정보 관리',
+                  icon: Icon(Icons.calculate_outlined,
+                  size: 35,),
                 ),
                 Tab(
                   icon: Icon(
-                    Icons.style_outlined,
+                    Icons.people,
+                    size: 35,
                   ),
-                  text: '스타일북',
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.book_outlined,
+                    size: 35,
+                  ),
                 )
               ],
             ),

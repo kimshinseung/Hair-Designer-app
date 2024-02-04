@@ -118,231 +118,252 @@ class _DetailInfoState extends State<DetailInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 40,),
-            Center(
-              child: Text("회원 정보",style:
-                TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35,
-                )
-            ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Text("이름:",
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 40,),
+              Center(
+                child: Text("회원 정보",style:
+                  TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 35,
+                  )
+              ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("이름",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 10,
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      controller: nameController,
+                      decoration: InputDecoration(
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("번호",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 10,
+                    child: TextField(
+                      style: TextStyle(
+                          fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      controller: numberController,
+                      decoration: InputDecoration(
+                        hintText: '',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("성별",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 10,
+                    child: TextField(
+                      style: TextStyle(
+                          fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      controller: sexController,
+                      decoration: InputDecoration(
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("나이",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 10,
+                    child: TextField(
+                      style: TextStyle(
+                          fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      controller: ageController,
+                      decoration: InputDecoration(
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text("특징",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 10,
+                    child: Container(
+                      height: 270, // 이 부분의 높이를 조절하여 특징 목록의 크기를 설정합니다.
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: featureList.map((map) {
+                            int index = featureList.indexOf(map);
+                            return ListTile(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailFeature(featureData: map,),),);
+                              },
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      map['feature']!,
+                                      style: TextStyle(fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Text(
+                                    map['date']!, // 여기에 날짜를 표시
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  setState(() {
+                                    featureList.removeAt(index);
+                                  });
+                                },
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                      child: Text("특징 추가 ",style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),)),
+                  Expanded(
+                    flex: 8,
+                      child: TextField(
+                        controller: newFeatureController,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
+                        maxLines: 3,
+                  ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: IconButton(
+                      icon: Icon(Icons.add_circle, size: 40),
+                      onPressed: () {
+                        setState(() {
+                          String newFeature = newFeatureController.text.trim();
+                          if (newFeature.isNotEmpty) {
+                            featureList.add({
+                              'feature': newFeature,
+                              'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                            });
+                            newFeatureController.clear();
+                          }
+                        });
+                        print(featureList);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                children: [
+                  Text('최근 방문 날짜: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(lastModified.text))}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                  ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: TextField(
-                    style: TextStyle(
-                      fontSize: 22,
-                    ),
-                    controller: nameController,
-                    decoration: InputDecoration(
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Text("번호:",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: TextField(
-                    style: TextStyle(
-                        fontSize: 22,
-
-                    ),
-                    controller: numberController,
-                    decoration: InputDecoration(
-                      hintText: '',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Text("성별:",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: TextField(
-                    style: TextStyle(
-                        fontSize: 22,
-
-                    ),
-                    controller: sexController,
-                    decoration: InputDecoration(
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Text("나이:",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: TextField(
-                    style: TextStyle(
-                        fontSize: 22,
-                    ),
-                    controller: ageController,
-                    decoration: InputDecoration(
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Text("특징:",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,),
-                  ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: Container(
-                    height: 170, // 이 부분의 높이를 조절하여 특징 목록의 크기를 설정합니다.
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: featureList.map((map) {
-                          int index = featureList.indexOf(map);
-                          return ListTile(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => DetailFeature(featureData: map,),),);
-                            },
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    map['feature']!,
-                                    style: TextStyle(fontSize: 22,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Text(
-                                  map['date']!, // 여기에 날짜를 표시
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            trailing: IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                setState(() {
-                                  featureList.removeAt(index);
-                                });
-                              },
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                    child: Text("특징 추가 :",style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),)),
-                Expanded(
-                  flex: 8,
-                    child: TextField(
-                      controller: newFeatureController,
-                      style: TextStyle(
-                        fontSize: 17,
-                      ),
-                      maxLines: 3,
-                ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: IconButton(
-                    icon: Icon(Icons.add_circle, size: 40),
-                    onPressed: () {
-                      setState(() {
-                        String newFeature = newFeatureController.text.trim();
-                        if (newFeature.isNotEmpty) {
-                          featureList.add({
-                            'feature': newFeature,
-                            'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
-                          });
-                          newFeatureController.clear();
-                        }
-                      });
-                      print(featureList);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Row(
-              children: [
-                Text('최근 방문 날짜: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(lastModified.text))}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
-                ),),
-              ],
-            ),
-            SizedBox(height: 10,),
-            Center(child: ElevatedButton(onPressed:
-            saveChanges, child: Text('수정완료',style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold
-            ),),))
-          ],
+                    fontSize: 17,
+                  ),),
+                ],
+              ),
+              SizedBox(height: 10,),
+              Center(child: ElevatedButton(onPressed:
+              saveChanges, child: Text('수정완료',style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold
+              ),),))
+            ],
+          ),
         ),
       ),
     );

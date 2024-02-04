@@ -103,6 +103,9 @@
 - 텍스트가 계속 추가되면서 ListView.builder크기가 한없이 커지는 경우
     > Container와 SingleChildScrollView를 조합해서 변경
     > Container의 높이 속성을 조절하여 설정할 수 있다.
+- 위젯화면의 공간이 모잘라 키보드가 올라오면 위젯안 구조들이 안보인는 현상
+    > resizeToAvoidBottomInset: true를 Scaffold안에 추가하고 그 안 위젯을 SingleChildScrollView로 감싼다.
+
 
 ## 공부한 내용
 - SQFlite : 관계형 데이터베이스 관리 시스템
