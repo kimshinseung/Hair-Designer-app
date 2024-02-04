@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:hairapp/Database/DBHelper.dart';
 
 import '../Home/ImageViewer.dart';
+import '../info/AddInfo.dart';
 // ignore_for_file: prefer_const_constructors
 // const 상수 무시
 
@@ -43,6 +44,42 @@ class _DetailStyleState extends State<DetailStyle> {
       await loadImages();
     }
   }
+  Future<void> showDeleteDialog(String imagePath) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text("이미지를 삭제하시겠습니까?",
+          style: TextStyle(
+            fontSize: 27,
+          ),),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await helper.deleteImage(imagePath, widget.categoryName);
+                await loadImages();
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+              child: Text("삭제",style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+              child: Text("취소",style: TextStyle(
+                fontSize: 20,
+                  fontWeight: FontWeight.bold
+              ),),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +88,23 @@ class _DetailStyleState extends State<DetailStyle> {
         children: [
           const SizedBox(height: 50,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.categoryName,style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(1.0,1.0),
-                      blurRadius: 3.0,
-                      color: Colors.black.withOpacity(0.3),
-                    )
-                  ]
-              ),),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(widget.categoryName,style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(1.0,1.0),
+                        blurRadius: 3.0,
+                        color: Colors.black.withOpacity(0.3),
+                      )
+                    ]
+                ),
+                ),
+              ),
             ],
           ),
           Expanded(
@@ -90,6 +131,9 @@ class _DetailStyleState extends State<DetailStyle> {
                     String imagePath = images[imageIndex]['imagePath'];
                     if (imagePath.startsWith('assets/')) {
                       return GestureDetector(
+                        onLongPress: (){
+                          showDeleteDialog(imagePath);
+                        },
                         onTap: () {
                           Navigator.push(
                             context,
@@ -102,6 +146,9 @@ class _DetailStyleState extends State<DetailStyle> {
                       );
                     } else {
                       return GestureDetector(
+                        onLongPress: (){
+                          showDeleteDialog(imagePath);
+                        },
                         onTap: () {
                           Navigator.push(
                             context,

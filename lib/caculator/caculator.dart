@@ -40,8 +40,8 @@ class DesignPage extends StatelessWidget
             const SizedBox(height: 50,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(height: 80,),
+              children: const [
+                SizedBox(height: 80,),
               ],
             ),
             Flexible
