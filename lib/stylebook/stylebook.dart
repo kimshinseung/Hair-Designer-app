@@ -44,8 +44,10 @@ class _stylebookState extends State<stylebook> {
     for (var image in imageItems) {
       groupedImages.putIfAbsent(image.category, () => []).add(image);
     }
-    firstImagesInCategories = groupedImages.entries.map((e) => e.value.first).toList();
-   // print(firstImagesInCategories);
+    //아래는 맨처음 사진 가져오기
+    //firstImagesInCategories = groupedImages.entries.map((e) => e.value.first).toList();
+    //아래는 마지막 사진 가져오기
+    firstImagesInCategories = groupedImages.entries.map((e) => e.value.last).toList();
     setState(() {
       imageList = imageItems;
     });

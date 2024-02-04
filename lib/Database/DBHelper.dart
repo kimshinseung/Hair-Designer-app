@@ -53,6 +53,15 @@ class DBHelper{
   // 카테고리에 해당하는 이미지들 불러오기
   Future<List<Map<String, dynamic>>> getImagesByCategory(String category) async {
     final db = await database;
-    return await db.query(tableImages, where: 'category = ?', whereArgs: [category]);
+    return await db.query(tableImages, where: 'category = ?', whereArgs: [category],);
+  }
+  Future<List<Map<String, dynamic>>> getImagesByCategoryOrderedByDate(String category) async {
+    final db = await database;
+    return await db.query(
+      tableImages,
+      where: 'category = ?',
+      whereArgs: [category],
+      orderBy: 'id DESC', // 변경 부분: id 대신 원하는 날짜 필드로 변경하세요.
+    );
   }
 }

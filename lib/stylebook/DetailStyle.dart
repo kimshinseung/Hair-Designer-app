@@ -37,7 +37,6 @@ class _DetailStyleState extends State<DetailStyle> {
   Future<void> _getImageFromGallery() async {
     // 새로운 메소드를 사용하여 이미지 선택
     final File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-    print("kssasdasdasd$imageFile");
     if (imageFile != null) {
       File file = File(imageFile.path);
       await helper.insertImage(file.path, widget.categoryName);
