@@ -154,20 +154,11 @@ class _stylebookState extends State<stylebook> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("카테고리 확인",style: TextStyle(
+          title: Text("카테고리 삭제",style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
           ),),
           actions: <Widget>[
-            TextButton(
-              child: Text('보기',style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),),
-              onPressed: () {
-                Navigator.pop(context, 'view');
-              },
-            ),
             TextButton(
               child: Text('삭제',style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -175,6 +166,15 @@ class _stylebookState extends State<stylebook> {
               ),),
               onPressed: () {
                 Navigator.pop(context, 'delete');
+              },
+            ),
+            TextButton(
+              child: Text('취소',style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),),
+              onPressed: () {
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -243,7 +243,19 @@ class _stylebookState extends State<stylebook> {
                     String imagePath = imageItem.imagePath;
                     if (imagePath.startsWith('assets/')) {
                       return GestureDetector(
-                        onTap: () => onImageClicked(imageItem),
+                        onLongPress: () {
+                          onImageClicked(imageItem);
+                        },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailStyle(
+                                categoryName: imageItem.category,
+                              ),
+                            ),
+                          );
+                        },
                         child: Column(
                           children: <Widget>[
                             Expanded(
@@ -264,7 +276,19 @@ class _stylebookState extends State<stylebook> {
                       );
                     }else {
                       return GestureDetector(
-                        onTap: () => onImageClicked(imageItem),
+                        onLongPress: () {
+                          onImageClicked(imageItem);
+                        },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailStyle(
+                                categoryName: imageItem.category,
+                              ),
+                            ),
+                          );
+                        },
                         child: Column(
                           children: <Widget>[
                             Expanded(
