@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Tab(
                   icon: Icon(
-                    Icons.book_outlined,
+                    Icons.bookmark_border_outlined,
                     size: 35,
                   ),
                 )
