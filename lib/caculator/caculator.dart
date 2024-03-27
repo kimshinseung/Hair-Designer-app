@@ -112,7 +112,8 @@ class CalButton extends StatelessWidget
         fixedSize: Size((MediaQuery.of(context).size.width/4)-30, (MediaQuery.of(context).size.width/4)-20),
         shape: const CircleBorder(),
       ),
-      child: Text(caption, style: const TextStyle(fontSize: 13,),),
+
+      child: Text(caption, style: const TextStyle(color: Color(0xff666369),fontSize: 17,),),
     );
   }
 }
@@ -132,63 +133,63 @@ class ButtonGroupWidget extends StatelessWidget
           (
           children: <Widget>
           [
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: 'C', color: Color(0xffD7ECF1), buttonKind: 3,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '%', color: Color(0xffD7ECF1), buttonKind: 3,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '⇍', color: Color(0xffD7ECF1), buttonKind: 3,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '÷', color: Color(0xffD7ECF1), buttonKind: 1,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '5%', color: Color(0xff9AACBC), buttonKind: 4,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '30%', color: Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: 'C', color: Color(0xffD7ECF1), buttonKind: 3,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '%', color: Color(0xffD7ECF1), buttonKind: 3,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '⇍', color: Color(0xffD7ECF1), buttonKind: 3,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '÷', color: Color(0xffD7ECF1), buttonKind: 1,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '5%', color: Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '30%', color: Color(0xff9AACBC), buttonKind: 4,),),
           ],
         ),
         TableRow
           (
           children: <Widget>
           [
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '7', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '8', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '9', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '×', color: Color(0xffD7ECF1), buttonKind: 1,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '10%', color: Color(0xff9AACBC), buttonKind: 4,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '35%', color: Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '7', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '8', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '9', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '×', color: Color(0xffD7ECF1), buttonKind: 1,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '10%', color: Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '35%', color: Color(0xff9AACBC), buttonKind: 4,),),
           ],
         ),
         TableRow
           (
           children: <Widget>
           [
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '4', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '5', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '6', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '−', color: Color(0xffD7ECF1),buttonKind: 1,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '15%', color:Color(0xff9AACBC), buttonKind: 4,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '40%', color:Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '4', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '5', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '6', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '−', color: Color(0xffD7ECF1),buttonKind: 1,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '15%', color:Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '40%', color:Color(0xff9AACBC), buttonKind: 4,),),
           ],
         ),
         TableRow
           (
           children: <Widget>
           [
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '1', color:Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '2', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '3', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '+', color: Color(0xffD7ECF1), buttonKind: 1,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '20%', color: Color(0xff9AACBC), buttonKind: 4,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '45%', color: Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '1', color:Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '2', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '3', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '+', color: Color(0xffD7ECF1), buttonKind: 1,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '20%', color: Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '45%', color: Color(0xff9AACBC), buttonKind: 4,),),
           ],
         ),
         TableRow
           (
           children: <Widget>
           [
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '+/-', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '+/-', color: Color(0xffD7ECF1), buttonKind: 0,),),
             Expanded(
               flex: 3,
                 child: Padding(
-                  padding: EdgeInsets.all(5), child: CalButton(caption: '0', color: Color(0xffD7ECF1), buttonKind: 0,),)),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '.', color: Color(0xffD7ECF1), buttonKind: 0,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '=', color: Color(0xffD7ECF1), buttonKind: 2,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '25%', color: Color(0xff9AACBC), buttonKind: 4,),),
-            Padding(padding: EdgeInsets.all(5), child: CalButton(caption: '50%', color: Color(0xff9AACBC), buttonKind: 4,),),
+                  padding: EdgeInsets.all(2), child: CalButton(caption: '0', color: Color(0xffD7ECF1), buttonKind: 0,),)),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '.', color: Color(0xffD7ECF1), buttonKind: 0,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '=', color: Color(0xffD7ECF1), buttonKind: 2,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '25%', color: Color(0xff9AACBC), buttonKind: 4,),),
+            Padding(padding: EdgeInsets.all(2), child: CalButton(caption: '50%', color: Color(0xff9AACBC), buttonKind: 4,),),
           ],
         ),
       ],
