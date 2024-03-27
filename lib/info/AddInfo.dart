@@ -63,6 +63,7 @@ class _AddInfoState extends State<AddInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
@@ -71,7 +72,7 @@ class _AddInfoState extends State<AddInfo> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20),
-                child: Image.asset('assets/images/logo.png',
+                child: Image.asset('assets/images/logo4.png',
                   width: 80,
                   height: 80,
                   fit: BoxFit.contain,),
@@ -94,7 +95,12 @@ class _AddInfoState extends State<AddInfo> {
                 ),
                 controller: nameController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xff9AACBC),)
+                  ),
                   labelText: '이름',
                 ),
               ),
@@ -105,14 +111,24 @@ class _AddInfoState extends State<AddInfo> {
                 ),
                 controller: numberController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xff9AACBC),)
+                  ),
                   labelText: '전화번호',
                 ),
               ),
               DropdownButtonFormField<String>(
                 value : selectedGender,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff9AACBC),)
+                    ),
                   labelText: '성별',
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -141,7 +157,12 @@ class _AddInfoState extends State<AddInfo> {
                 ),
                 controller: ageController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xff9AACBC),)
+                  ),
                   labelText: '나이',
                 ),
                 keyboardType: TextInputType.number,
@@ -153,16 +174,33 @@ class _AddInfoState extends State<AddInfo> {
                 ),
                 controller: featureController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xff9AACBC),)
+                  ),
                   labelText: '특징',
                 ),
                 maxLines: 5,
               ),
               SizedBox(height: 40,),
-              ElevatedButton(onPressed: save, child: Text("등록하기",style: TextStyle(
+              ElevatedButton(onPressed: save,
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0XffC2E1E7),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Container(
+                    width: 100,
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: Text("등록하기",style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold
-              ),)),
+              ),),
+                  )),
             ],
           )
         ],
