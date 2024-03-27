@@ -326,7 +326,8 @@ class _DetailInfoState extends State<DetailInfo> {
                   Expanded(
                     flex: 2,
                     child: IconButton(
-                      icon: Icon(Icons.add_circle, size: 40),
+                      icon: Icon(Icons.add_circle, size: 40,
+                      color:  Color(0XffC2E1E7),),
                       onPressed: () {
                         setState(() {
                           String newFeature = newFeatureController.text.trim();
@@ -356,12 +357,24 @@ class _DetailInfoState extends State<DetailInfo> {
                   ),),
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 20,),
               Center(child: ElevatedButton(onPressed:
-              saveChanges, child: Text('수정완료',style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold
-              ),),))
+              saveChanges,
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0XffC2E1E7),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Container(
+                  width: 100,
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: Text('완료',style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold
+              ),),
+                ),))
             ],
           ),
         ),
