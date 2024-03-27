@@ -52,6 +52,7 @@ class _DetailStyleState extends State<DetailStyle> {
           content: Text("이미지를 삭제하시겠습니까?",
           style: TextStyle(
             fontSize: 27,
+            fontWeight: FontWeight.bold
           ),),
           actions: [
             TextButton(
