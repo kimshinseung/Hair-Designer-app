@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-import 'package:image_picker/image_picker.dart';
+
+import 'package:file_picker/file_picker.dart';
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -157,11 +159,17 @@ class _HomePageState extends State<HomePage> {
 
 
   void pickImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
 
-    if (image != null) {
-      // File imageFile = File(image.path);
-      addImage(File(image.path));
+    if (result != null && result.files.isNotEmpty) {
+      var path = result.files.first.path;
+      if (path != null) {
+        // File imageFile = File(path);
+        addImage(File(path));
+      }
     }
   }
 

@@ -1,8 +1,9 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hairapp/stylebook/ShowImage.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:hairapp/Database/DBHelper.dart';
 
 import '../Home/ImageViewer.dart';
@@ -21,7 +22,7 @@ class DetailStyle extends StatefulWidget {
 class _DetailStyleState extends State<DetailStyle> {
   DBHelper helper = DBHelper();
   late List<Map<String, dynamic>> images;
-  final ImagePicker _picker = ImagePicker();
+  // final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -36,14 +37,21 @@ class _DetailStyleState extends State<DetailStyle> {
 
   //앨범에서 이미지 가져오기
   Future<void> _getImageFromGallery() async {
-    // 새로운 메소드를 사용하여 이미지 선택
-    final File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-    if (imageFile != null) {
-      File file = File(imageFile.path);
-      await helper.insertImage(file.path, widget.categoryName);
-      await loadImages();
+    var result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      var path = result.files.first.path;
+      if (path != null) {
+        File file = File(path);
+        await helper.insertImage(file.path, widget.categoryName);
+        await loadImages();
+      }
     }
   }
+
   Future<void> showDeleteDialog(String imagePath) async {
     return showDialog(
       context: context,
